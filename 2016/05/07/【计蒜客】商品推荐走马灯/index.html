@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>tsFissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="tsFissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsFissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> </h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>title: [计蒜客]商品推荐走马灯<br>date:2016-01-17 22:42:43<br>tags:数据结构</p>
+<h3 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a><a href="http://nanti.jisuanke.com/t/441" target="_blank" rel="external">题目链接</a></h3><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>有长度为$N$的数列$A[1…N]$,对于每次询问$L,R$,求:<br>$$answer = \sum<em>{i=l}^r\sum</em>{j=i}^rf(ij)=回文序列?sum(A[i…j]):0$$</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
+<li><code>manacher</code>回文串 &amp; 线段树</li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>我们利用<code>manacher</code>算法插入辅助数据后，每一个回文序列$[l,r]$都有一个中点$p$,如果$p$在询问$[L,R]$的<strong>中间偏左</strong>，那么我们可以get新区间$[max(L,l),p]$，这个区间内每一位置作为回文序列的左端点，$p$为中点形成的序列都对询问有贡献.贡献为：如果位置$p1$是插入的辅助数据,贡献为0,否则贡献为$value=sum(A_{p1..p})<em>2-A_p=(preSum<em>p-preSum</em>{p1-1})</em>2-A_p$,用段树来维护一下这个公式就可以算了， <strong>中间偏右</strong>同理.<br>对于询问$[L,R]$，我们可以拆分成两部分$[L,Mid]$和$[Mid+1,R]$<code>(Mid = L + R &gt;&gt; 1)</code>,从左到右和从右到左分别排序离线询问一次，加起来就是结果了.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LLONG;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; PII;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> out(x) std::cout &lt;&lt; #x &lt;&lt; <span class="string">" = "</span> &lt;&lt; x &lt;&lt; std::endl;</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ciBufferSize = <span class="number">2e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEFMID  int mid = l + r &gt;&gt; 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LSON    (v &lt;&lt; 1)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RSON    (v &lt;&lt; 1 | 1)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> A[ciBufferSize];</span><br><span class="line"><span class="keyword">int</span> pA[ciBufferSize];</span><br><span class="line"><span class="keyword">int</span> preSum[ciBufferSize];</span><br><span class="line">LLONG answer[ciBufferSize];</span><br><span class="line">LLONG preSumSum[ciBufferSize];</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> RunOrder &#123;</span><br><span class="line">trueRO_LTOR,    <span class="comment">// 左到右</span></span><br><span class="line">trueRO_RTOL,    <span class="comment">// 右到左</span></span><br><span class="line">trueRO_MAX,</span><br><span class="line">&#125;;</span><br><span class="line">RunOrder order = RO_MAX;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> SegTree &#123;</span><br><span class="line">true<span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">truetrueadd[v] = <span class="number">0</span>;</span><br><span class="line">truetrueadd2[v] = <span class="number">0</span>;</span><br><span class="line">truetruelazy[v] = <span class="number">0</span>;</span><br><span class="line">truetruelazy2[v] = <span class="number">0</span>;</span><br><span class="line">truetrue<span class="keyword">if</span> (l &gt;= r) return;</span><br><span class="line">truetrueDEFMID;</span><br><span class="line">truetruebuild(l, mid, LSON);</span><br><span class="line">truetruebuild(mid + <span class="number">1</span>, r, RSON);</span><br><span class="line">true&#125;</span><br><span class="line"></span><br><span class="line">true<span class="function">LLONG <span class="title">gather</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">truetrue<span class="keyword">int</span> num = r - l + <span class="number">1</span>;</span><br><span class="line">truetrue<span class="keyword">switch</span> (order) &#123;</span><br><span class="line">truetrue<span class="keyword">case</span> RO_LTOR:</span><br><span class="line">truetruetruenum = num + (l &amp; <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">truetruetrue<span class="keyword">break</span>;</span><br><span class="line">truetrue<span class="keyword">case</span> RO_RTOL:</span><br><span class="line">truetruetruenum = num + (!(l &amp; <span class="number">1</span>)) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">truetruetrue<span class="keyword">break</span>;</span><br><span class="line">truetrue&#125;</span><br><span class="line">truetruereturn add[v] + lazy[v] * num;</span><br><span class="line">true&#125;</span><br><span class="line"></span><br><span class="line">true<span class="function">LLONG <span class="title">gather2</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">truetruereturn add2[v] + lazy2[v] * (preSumSum[r] - preSumSum[l - <span class="number">1</span>]);</span><br><span class="line">true&#125;</span><br><span class="line"></span><br><span class="line">true<span class="function"><span class="keyword">void</span> <span class="title">pushUp</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">truetrueDEFMID;</span><br><span class="line">truetrueadd[v] = gather(LSON, l, mid) + gather(RSON, mid + <span class="number">1</span>, r);</span><br><span class="line">truetrueadd2[v] = gather2(LSON, l, mid) + gather2(RSON, mid + <span class="number">1</span>, r);</span><br><span class="line">true&#125;</span><br><span class="line"></span><br><span class="line">true<span class="function"><span class="keyword">void</span> <span class="title">pushDown</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">truetrue<span class="keyword">if</span> (lazy[v]) &#123;</span><br><span class="line">truetruetruelazy[LSON] += lazy[v];</span><br><span class="line">truetruetruelazy[RSON] += lazy[v];</span><br><span class="line">truetruetruelazy[v] = <span class="number">0</span>;</span><br><span class="line">truetrue&#125;</span><br><span class="line">truetrue<span class="keyword">if</span> (lazy2[v]) &#123;</span><br><span class="line">truetruetruelazy2[LSON] += lazy2[v];</span><br><span class="line">truetruetruelazy2[RSON] += lazy2[v];</span><br><span class="line">truetruetruelazy2[v] = <span class="number">0</span>;</span><br><span class="line">truetrue&#125;</span><br><span class="line">true&#125;</span><br><span class="line"></span><br><span class="line">true<span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">truetrue<span class="keyword">if</span> (l &gt;= x &amp;&amp; r &lt;= y) &#123;</span><br><span class="line">truetruetruelazy[v] += z;</span><br><span class="line">truetruetrue++lazy2[v];</span><br><span class="line">truetruetruereturn;</span><br><span class="line">truetrue&#125;</span><br><span class="line">truetruepushDown(v);</span><br><span class="line">truetrueDEFMID;</span><br><span class="line">truetrue<span class="keyword">if</span> (mid &gt;= x) update(l, mid, x, y, z, LSON);</span><br><span class="line">truetrue<span class="keyword">if</span> (mid &lt; y) update(mid + <span class="number">1</span>, r, x, y, z, RSON);</span><br><span class="line">truetruepushUp(v, l, r);</span><br><span class="line">true&#125;</span><br><span class="line"></span><br><span class="line">true<span class="function">LLONG <span class="title">query</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">truetrue<span class="keyword">if</span> (l &gt;= x &amp;&amp; r &lt;= y) &#123;</span><br><span class="line">truetruetruereturn gather(v, l, r) - gather2(v, l, r) * <span class="number">2</span>;</span><br><span class="line">truetrue&#125;</span><br><span class="line">truetruepushDown(v);</span><br><span class="line">truetrueLLONG result = <span class="number">0</span>;</span><br><span class="line">truetrueDEFMID;</span><br><span class="line">truetrue<span class="keyword">if</span> (mid &gt;= x) result = query(l, mid, x, y, LSON);</span><br><span class="line">truetrue<span class="keyword">if</span> (mid &lt; y) result += query(mid + <span class="number">1</span>, r, x, y, RSON);</span><br><span class="line">truetruepushUp(v, l, r);</span><br><span class="line">truetruereturn result;</span><br><span class="line">true&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">trueLLONG add[ciBufferSize &lt;&lt; <span class="number">2</span>];	<span class="comment">//presum * 2 - Ap</span></span><br><span class="line">trueLLONG lazy[ciBufferSize &lt;&lt; <span class="number">2</span>];</span><br><span class="line">trueLLONG add2[ciBufferSize &lt;&lt; <span class="number">2</span>];	<span class="comment">//区间更新了多少次</span></span><br><span class="line">trueLLONG lazy2[ciBufferSize &lt;&lt; <span class="number">2</span>];</span><br><span class="line">&#125; tree;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> Query &#123;</span><br><span class="line">true<span class="keyword">int</span> l, r, id;</span><br><span class="line">trueQuery() &#123;&#125;</span><br><span class="line">trueQuery(<span class="keyword">int</span> ll, <span class="keyword">int</span> rr, <span class="keyword">int</span> idd): l(ll), r(rr), id(idd) &#123;&#125;</span><br><span class="line">&#125; qryL[ciBufferSize &gt;&gt; <span class="number">1</span>], qryR[ciBufferSize &gt;&gt; <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">computePA</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">true<span class="keyword">int</span> mr = <span class="number">0</span>, id = <span class="number">0</span>;</span><br><span class="line">true<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">truetruepA[i] = mr &gt; i ? <span class="built_in">std</span>::min(pA[(id &lt;&lt; <span class="number">1</span>) - i], mr - i) : <span class="number">1</span>;</span><br><span class="line">truetrue<span class="keyword">for</span> (; A[i - pA[i]] == A[i + pA[i]]; ++pA[i]);</span><br><span class="line">truetrue<span class="keyword">if</span> (i + pA[i] &gt;= mr) &#123;</span><br><span class="line">truetruetruemr = i + pA[i];</span><br><span class="line">truetruetrueid = i;</span><br><span class="line">truetrue&#125;</span><br><span class="line">true&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(Query qry[], <span class="keyword">int</span> n, <span class="keyword">int</span> q)</span> </span>&#123;</span><br><span class="line">true<span class="built_in">std</span>::sort(qry, qry + q, [](const Query &amp; a, const Query &amp; b) &#123;</span><br><span class="line">truetrue<span class="keyword">if</span> (a.r == b.r) return a.l &lt; b.l;</span><br><span class="line">truetruereturn  a.r &lt; b.r;</span><br><span class="line">true&#125;);</span><br><span class="line">truetree.build(<span class="number">1</span>, n, <span class="number">1</span>);</span><br><span class="line">true<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">truetrue<span class="keyword">int</span> l = i - pA[i] + <span class="number">1</span>, v = preSum[i] * <span class="number">2</span> - A[i];</span><br><span class="line">truetruetree.update(<span class="number">1</span>, n, l, i, v, <span class="number">1</span>);</span><br><span class="line">truetrue<span class="keyword">for</span> (; j &lt; q &amp;&amp; qry[j].r &lt;= i; ++j) &#123;</span><br><span class="line">truetruetrue<span class="keyword">if</span> (qry[j].l &lt;= qry[j].r)</span><br><span class="line">truetruetruetrueanswer[qry[j].id] += tree.query(<span class="number">1</span>, n, qry[j].l, qry[j].r, <span class="number">1</span>);</span><br><span class="line">truetrue&#125;</span><br><span class="line">true&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">reverseData</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">true<span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">1</span>, r = n; l &lt; r;) &#123;</span><br><span class="line">truetrue<span class="built_in">std</span>::swap(pA[l], pA[r]);</span><br><span class="line">truetrue<span class="built_in">std</span>::swap(A[l++], A[r--]);</span><br><span class="line">true&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">isSynthesize</span><span class="params">(<span class="keyword">int</span> p)</span> </span>&#123;</span><br><span class="line">true<span class="keyword">switch</span> (order) &#123;</span><br><span class="line">true<span class="keyword">case</span> RO_LTOR:</span><br><span class="line">truetruereturn !(p &amp; <span class="number">1</span>);</span><br><span class="line">true<span class="keyword">case</span> RO_RTOL:</span><br><span class="line">truetruereturn p &amp; <span class="number">1</span>;</span><br><span class="line">true&#125;</span><br><span class="line">truereturn <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">computePreSum</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">truepreSum[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">truepreSumSum[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">true<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">truetruepreSum[i] = preSum[i - <span class="number">1</span>] + A[i];</span><br><span class="line">truetruepreSumSum[i] = preSumSum[i - <span class="number">1</span>] + (isSynthesize(i) ? <span class="number">0</span> : preSum[i - <span class="number">1</span>]);</span><br><span class="line">true&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">computeRevPos</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> t)</span> </span>&#123;</span><br><span class="line">truereturn n - t + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">true<span class="keyword">int</span> n, q;</span><br><span class="line">true<span class="keyword">for</span> (; ~<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;q);) &#123;</span><br><span class="line">truetrueA[<span class="number">0</span>] = <span class="number">-111</span>;</span><br><span class="line">truetrue<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, k; i &lt; n; ++i) &#123;</span><br><span class="line">truetruetrue<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;k);</span><br><span class="line">truetruetrueA[++j] = k;</span><br><span class="line">truetruetrueA[++j] = <span class="number">0</span>;</span><br><span class="line">truetrue&#125;</span><br><span class="line">truetruen &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">truetrueA[n | <span class="number">1</span>] = <span class="number">-222</span>;</span><br><span class="line">truetrue<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; ++i) &#123;</span><br><span class="line">truetruetrue<span class="keyword">int</span> l, r;</span><br><span class="line">truetruetrue<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;l, &amp;r);</span><br><span class="line">truetruetrue<span class="keyword">if</span> (l &gt; r) <span class="built_in">std</span>::swap(l, r);</span><br><span class="line">truetruetruel = (l &lt;&lt; <span class="number">1</span>) - <span class="number">1</span>;</span><br><span class="line">truetruetruer = (r &lt;&lt; <span class="number">1</span>) - <span class="number">1</span>;</span><br><span class="line">truetruetrueDEFMID;</span><br><span class="line">truetruetrueqryL[i] = Query(l, mid, i);</span><br><span class="line">truetruetrueqryR[i] = Query(computeRevPos(n, r), computeRevPos(n, mid + <span class="number">1</span>), i);</span><br><span class="line">truetrue&#125;</span><br><span class="line">truetruecomputePA(n);</span><br><span class="line">truetrueorder = RO_LTOR;</span><br><span class="line">truetruecomputePreSum(n);</span><br><span class="line">truetruesolve(qryL, n, q);</span><br><span class="line"></span><br><span class="line">truetrueorder = RO_RTOL;</span><br><span class="line">truetruereverseData(n);</span><br><span class="line">truetruecomputePreSum(n);</span><br><span class="line">truetruesolve(qryR, n, q);</span><br><span class="line">truetrue<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; ++i)</span><br><span class="line">truetruetrue<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, answer[i]);</span><br><span class="line">true&#125;</span><br><span class="line">truereturn <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/05/07/连号区间数-CF526F/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/04/24/卿学姐与基本法/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-05-07 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+</body>
+   </html>
