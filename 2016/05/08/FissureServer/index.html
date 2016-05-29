@@ -28,12 +28,11 @@
   <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
   <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
   <script src="/js/jquery-2.0.3.min.js"></script>
-
   <!-- analytics -->
   
 
@@ -111,17 +110,27 @@
 	<div class="mypage">		
 	  		
 
-	  <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>公司的服务器框架原型来自于<a href="http://www.scutgame.com/" target="_blank" rel="external">SCUTGAME</a>,最近在解读中，顺便就造一个自己的出来吧.</p>
+	  <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>公司的服务器框架原型来自于<a href="http://www.scutgame.com/" target="_blank" rel="external">SCUTGAME</a>,最近在解读中，顺便就造一个自己的出来吧.力求更简洁，更易懂，效率不失,扩展性不失.</p>
 <p>我的属性:</p>
 <ul>
 <li>语言：c#</li>
 <li>平台: Windows</li>
-<li>数据库: 待定</li>
-<li>网络传输协议: socket</li>
+<li>数据库: Mysql(存日志),SSDB(存数据)</li>
+<li>网络传输协议: tcp</li>
 <li>源码: <a href="https://github.com/tsfissure/FissureServer" target="_blank" rel="external">In Github</a></li>
 </ul>
 <a id="more"></a>
-<p>TODO LIST:<br>[] Host: 最外层的主机，控制整个服务器的生命周期<br>[] Config: 服务器配置<br>[] NetService: 网络服务<br>[] Runtime: 运行时<br>[] 日志系统<br>[] 定时器系统<br>[] …</p>
+<h2 id="初识SharkServer-Common"><a href="#初识SharkServer-Common" class="headerlink" title="初识SharkServer.Common"></a>初识SharkServer.Common</h2><p>这应该算是一个比较体积小却功能还OK的gameserver，能处理客户端的请求响应，和广播客户端数据，还能在服务器之间完成跨服处理,均衡负载等。<br>它对数据库的处理可能不够优秀，如果数据库崩了，没有备用的用，整个服务器就跪了，也就是，它的数据，只存在了一个地方。</p>
+<p>//TODO LIST:</p>
+<ul>
+<li>[x] Host: 最外层的主机，控制整个服务器的生命周期</li>
+<li>[ ] NetService: 网络服务</li>
+<li>[ ] Runtime: 运行时</li>
+<li>[x] 日志系统</li>
+<li>[ ] 定时器系统</li>
+<li>[ ] 数据库</li>
+<li>[ ] …</li>
+</ul>
 	  
 	</div>
 
@@ -176,6 +185,8 @@
   <h2 class="title">留言</h2>
 
   
+  	 <div class="ds-thread" data-thread-key="2016/05/08/FissureServer/" data-title="FissureServer" data-url="http://tsfissure.com/2016/05/08/FissureServer/"></div>  
+  
 </section>
 
 	</div> <!-- col-md-9/col-md-12 -->
@@ -201,7 +212,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/GameServer/">GameServer<span>1</span></a></li>
+  <li><a href="/tags/GameServer/">GameServer<span>5</span></a></li>
     </ul>
 	</div>
 		
@@ -219,6 +230,18 @@
 		
 
 </div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
 
 
 

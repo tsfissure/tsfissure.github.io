@@ -28,12 +28,11 @@
   <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
   <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
   <script src="/js/jquery-2.0.3.min.js"></script>
-
   <!-- analytics -->
   
 
@@ -109,6 +108,129 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2016-05-27 </div>
+			<div class="article-title"><a href="/2016/05/27/FissureServer4/" >FissureServer(四)</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><h2 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h2><h3 id="Mysql-1"><a href="#Mysql-1" class="headerlink" title="Mysql"></a>Mysql</h3><p>着手写了Mysql存储数据.<br>这里利用了我们自定义的特性(Attribute)，也就是用在class field上面的[]，比如[obsote]表示过期。<br>如果要写入数据，我们得自定义种特性[DataEntityTable]表示这个结构要存入数据库。里面的字段用[DataEntityField]表示要存入的字段<br>在编译的时候，我们会把编译好的Assembly利用反射，找到带有[DataEntityTable]特性的类，和标有[DataEntityField]的字段，进行创建(修改)表.<br>这里还利用了一个名叫<code>MySql.Data.dll</code>的dll。主要用来执行sql语句，</p>
+<p>未完待续…</p>
+
+	
+	</div>
+  <a type="button" href="/2016/05/27/FissureServer4/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2016-05-22 </div>
+			<div class="article-title"><a href="/2016/05/22/FissureServer3/" >FissureServer(三)</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="Runtime"><a href="#Runtime" class="headerlink" title="Runtime"></a>Runtime</h2><h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><h2 id="CSarpComplier"><a href="#CSarpComplier" class="headerlink" title="CSarpComplier"></a>CSarpComplier</h2><p>啊，坑先留在这儿，有时间再回来补上.</p>
+
+	
+	</div>
+  <a type="button" href="/2016/05/22/FissureServer3/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2016-05-21 </div>
+			<div class="article-title"><a href="/2016/05/21/Snacks/" >Snacks[HDU5692]</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a><a href="http://acm.hdu.edu.cn/showproblem.php?pid=5692">题目链接</a></h2><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>给一$N$节点棵树，根节点为0,每个节点有权值$A_i$每次操作为以下二者之一:</p>
+<ul>
+<li>给定节点X，求根节点到X和其子树中的某个点上权值和，最大是多大</li>
+<li>修改节点X的值为Y</li>
+</ul>
+	
+	</div>
+  <a type="button" href="/2016/05/21/Snacks/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2016-05-15 </div>
+			<div class="article-title"><a href="/2016/05/15/FissureServer2/" >FissureServer(二)</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="源码-github"><a href="#源码-github" class="headerlink" title="源码: github"></a>源码: <a href="https://github.com/tsfissure/FissureServer">github</a></h2><h3 id="NetService"><a href="#NetService" class="headerlink" title="NetService"></a>NetService</h3><p>网络相关总的来说，被我分成了以下几类</p>
+<ul>
+<li>Message: 传输消息协议</li>
+<li>Connection: 单个连接</li>
+<li>SocketListener: 专门监听客户端的连接</li>
+<li>SocketService: 服务，消息行为逻辑处理一般都放在里面</li>
+<li>SocketHost: 掌管整网络服务的生命周期,Listener的开关控制，上面各模块中转站</li>
+</ul>
+	
+	</div>
+  <a type="button" href="/2016/05/15/FissureServer2/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2016-05-14 </div>
+			<div class="article-title"><a href="/2016/05/14/FissureServer1/" >FissureServer(一)</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="源码-github"><a href="#源码-github" class="headerlink" title="源码: github"></a>源码: <a href="https://github.com/tsfissure/FissureServer">github</a></h2><h3 id="内容决定"><a href="#内容决定" class="headerlink" title="内容决定"></a>内容决定</h3><ul>
+<li>FisureHost</li>
+<li>LogSystem</li>
+<li>Config</li>
+</ul>
+	
+	</div>
+  <a type="button" href="/2016/05/14/FissureServer1/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2016-05-10 </div>
 			<div class="article-title"><a href="/2016/05/10/bug集锦/" >Bugの收钱</a></div>						
 		</h3>
@@ -145,13 +267,13 @@
   <div class="row">
 	
 	
-		<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>公司的服务器框架原型来自于<a href="http://www.scutgame.com/">SCUTGAME</a>,最近在解读中，顺便就造一个自己的出来吧.</p>
+		<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>公司的服务器框架原型来自于<a href="http://www.scutgame.com/">SCUTGAME</a>,最近在解读中，顺便就造一个自己的出来吧.力求更简洁，更易懂，效率不失,扩展性不失.</p>
 <p>我的属性:</p>
 <ul>
 <li>语言：c#</li>
 <li>平台: Windows</li>
-<li>数据库: 待定</li>
-<li>网络传输协议: socket</li>
+<li>数据库: Mysql(存日志),SSDB(存数据)</li>
+<li>网络传输协议: tcp</li>
 <li>源码: <a href="https://github.com/tsfissure/FissureServer">In Github</a></li>
 </ul>
 	
@@ -231,114 +353,6 @@
 </div>
 
 		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2016-01-02 </div>
-			<div class="article-title"><a href="/2016/01/02/连号区间数-CF526F/" >连号区间数+CF526F[CF]</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h3 id="CF题目链接"><a href="#CF题目链接" class="headerlink" title="CF题目链接"></a><a href="http://codeforces.com/contest/526/problem/F">CF题目链接</a></h3><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><ul>
-<li>【CF题意】：在N*N的二维矩阵上有N个点，一定是一行或者一列，有且仅有一个数，总有多少个子矩阵，也满足一行或一列，有且仅有一个数,N为30万.</li>
-<li>【蓝桥杯题意】：给出N个数的某个排列，求出有多少个子序列，把它排序后是连续递增的.N为5万.
-	
-	</div>
-  <a type="button" href="/2016/01/02/连号区间数-CF526F/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2016-01-02 </div>
-			<div class="article-title"><a href="/2016/01/02/cocos2d-x带光标的输入框II/" >Cocos2d-x带光标的输入框II</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p>上篇文章介绍了我在项目中使用的TextField的单行输入，后来我因为帮会留言的时候又写了个多行的，所以在这里也顺便记录一下好了。</p>
-	
-	</div>
-  <a type="button" href="/2016/01/02/cocos2d-x带光标的输入框II/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2015-12-04 </div>
-			<div class="article-title"><a href="/2015/12/04/cocos2dx-TextField向左推进光标跟随/" >Cocos2dx-TextField向左推进光标跟随</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p>在什么网站上啊，游戏登录界面啊什么的，你输入的账号如果超过了那个框框的宽度，有些就会只显示后面输入的部分前面的隐藏了，同时光标也是接在后面的.这个看起来似乎很直接很简单的功能，对于cocos2dx的新手来说，我想也不会那么的顺利.<br>PS: 本人用的是<strong>Cocos2d-x 3.6</strong>版本，可以使用<em>csb</em>.<br>
-	
-	</div>
-  <a type="button" href="/2015/12/04/cocos2dx-TextField向左推进光标跟随/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2015-12-04 </div>
-			<div class="article-title"><a href="/2015/12/04/cocos2d-x带光标的输入框TextField/" >Cocos2dx-TextField向左推进光标跟随</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p>在什么网站上啊，游戏登录界面啊什么的，你输入的账号如果超过了那个框框的宽度，有些就会只显示后面输入的部分前面的隐藏了，同时光标也是接在后面的.这个看起来似乎很直接很简单的功能，对于cocos2dx的新手来说，我想也不会那么的顺利.<br>PS: 本人用的是<strong>Cocos2d-x 3.6</strong>版本，可以使用<em>csb</em>.<br>
-	
-	</div>
-  <a type="button" href="/2015/12/04/cocos2d-x带光标的输入框TextField/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2015-11-29 </div>
-			<div class="article-title"><a href="/2015/11/29/编码规范中的奇淫邪技（个人向/" >编码规范中的奇淫邪技(个人向</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><a name="pre"/>前言</h3><p><a href="">上一篇</a>讲了我在工作中遇到的”问题”，不应该触碰的禁忌.所以这篇文章准备记录一下我在工作中..算是得出的结论吧，总之就是在工作中我认为这些做法会有各种”好处”，比如代码量少，易阅读，易添加(功能)等.</p>
-<p>如果有不同意见或发现我的错误想法，欢迎下面评论指正.</p>
-	
-	</div>
-  <a type="button" href="/2015/11/29/编码规范中的奇淫邪技（个人向/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -389,21 +403,21 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/TextField/">TextField<span>2</span></a></li>
-		
-			<li><a href="/tags/GameServer/">GameServer<span>1</span></a></li>
-		
-			<li><a href="/tags/Bug/">Bug<span>1</span></a></li>
-		
 			<li><a href="/tags/cocos2d-x/">cocos2d-x<span>1</span></a></li>
-		
-			<li><a href="/tags/技巧/">技巧<span>1</span></a></li>
 		
 			<li><a href="/tags/禁忌/">禁忌<span>1</span></a></li>
 		
-			<li><a href="/tags/cocos2dx/">cocos2dx<span>2</span></a></li>
+			<li><a href="/tags/TextField/">TextField<span>1</span></a></li>
 		
-			<li><a href="/tags/数据结构/">数据结构<span>3</span></a></li>
+			<li><a href="/tags/cocos2dx/">cocos2dx<span>1</span></a></li>
+		
+			<li><a href="/tags/GameServer/">GameServer<span>5</span></a></li>
+		
+			<li><a href="/tags/数据结构/">数据结构<span>4</span></a></li>
+		
+			<li><a href="/tags/技巧/">技巧<span>1</span></a></li>
+		
+			<li><a href="/tags/Bug/">Bug<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -417,23 +431,23 @@
   <ul class="entry list-unstyled">
     
       <li>
-        <a href="/2016/05/10/bug集锦/" ><i class="fa fa-file-o"></i>Bugの收钱</a>
+        <a href="/2016/05/27/FissureServer4/" ><i class="fa fa-file-o"></i>FissureServer(四)</a>
       </li>
     
       <li>
-        <a href="/2016/05/08/FissureServer/" ><i class="fa fa-file-o"></i>FissureServer</a>
+        <a href="/2016/05/22/FissureServer3/" ><i class="fa fa-file-o"></i>FissureServer(三)</a>
       </li>
     
       <li>
-        <a href="/2016/04/24/卿学姐与基本法/" ><i class="fa fa-file-o"></i>卿学姐与基本法[UESTC]</a>
+        <a href="/2016/05/21/Snacks/" ><i class="fa fa-file-o"></i>Snacks[HDU5692]</a>
       </li>
     
       <li>
-        <a href="/2016/04/10/游戏中的角色名字长度/" ><i class="fa fa-file-o"></i>游戏中的角色名字长度</a>
+        <a href="/2016/05/15/FissureServer2/" ><i class="fa fa-file-o"></i>FissureServer(二)</a>
       </li>
     
       <li>
-        <a href="/2016/01/17/【计蒜客】商品推荐走马灯/" ><i class="fa fa-file-o"></i>商品推荐跑马灯[计蒜客]</a>
+        <a href="/2016/05/14/FissureServer1/" ><i class="fa fa-file-o"></i>FissureServer(一)</a>
       </li>
     
   </ul>
@@ -448,6 +462,8 @@
 		<li><i class="fa fa-github"></i><a href="https://github.com/wzpan/freemind/" title="Freemind's Github repository." target="_blank"]);">this theme</a></li>
 	
 		<li><i class="fa fa-github"></i><a href="http://www.github.com/tsfissure" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+		<li><i class="fa fa-folder"></i><a href="http://blog.csdn.net/madrishing" title="My csdn blog/about algorithm" target="_blank"]);">My CSDN</a></li>
 	
 	</ul>
 </div>

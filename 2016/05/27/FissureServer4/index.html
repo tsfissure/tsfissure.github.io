@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Cocos2dx-TextField向左推进光标跟随 | tsFissure</title>
+  <title>FissureServer(四) | tsFissure</title>
   <meta name="author" content="tsfissure">
   
   <meta name="description" content="fissure">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Cocos2dx-TextField向左推进光标跟随"/>
+  <meta property="og:title" content="FissureServer(四)"/>
   <meta property="og:site_name" content="tsFissure"/>
 
   
@@ -90,7 +90,7 @@
 
 	
 		<div class="page-header page-header-inverse ">		
-			<h1 class="title title-inverse "> Cocos2dx-TextField向左推进光标跟随</h1>
+			<h1 class="title title-inverse "> FissureServer(四)</h1>
 		</div>		
 	
 
@@ -110,48 +110,9 @@
 	<div class="mypage">		
 	  		
 
-	  <p>在什么网站上啊，游戏登录界面啊什么的，你输入的账号如果超过了那个框框的宽度，有些就会只显示后面输入的部分前面的隐藏了，同时光标也是接在后面的.这个看起来似乎很直接很简单的功能，对于cocos2dx的新手来说，我想也不会那么的顺利.<br>PS: 本人用的是<strong>Cocos2d-x 3.6</strong>版本，可以使用<em>csb</em>.<br><a id="more"></a></p>
-<ul>
-<li>功能：实现输入框的输入，向左推进，光标跟随(当前只适合iOS版本，且不能中间删除，只能结尾删除).</li>
-<li>实现：<ul>
-<li><a href="#csb">创建csb</a><ul>
-<li><a href="#var">定义场景和需要的成员变量</a></li>
-<li><a href="#init">初始化csb和成员变量</a></li>
-<li>对事件监听进行处理<ul>
-<li><a href="#attach">打开输入法</a></li>
-<li><a href="#insert">输入字符</a></li>
-<li><a href="#del">删除字符</a></li>
-<li><a href="#dettach">关闭输入法</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#other">其他</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="具体内容"><a href="#具体内容" class="headerlink" title="具体内容"></a>具体内容</h2><h3 id="创建csb"><a href="#创建csb" class="headerlink" title=" 创建csb"></a><a name="csb"> 创建csb</a></h3><ul>
-<li>创建一个csb,包含一个横向输入框<em>TextField</em>控制成只能存一行文字，名叫<code>textField</code>.</li>
-<li><em>TextField</em>下面包含一个细长细长的小图片<em>ImageView</em>用作光标<code>cursor</code>,<em>TextField</em>没有自带光标<del>2333</del>.<h3 id="变量"><a href="#变量" class="headerlink" title=" 变量"></a><a name="var"> 变量</a></h3></li>
-<li><code>static const int sciBufferLength = 256</code>: 最多256个文字</li>
-<li><code>TextField*     m_pkField</code>: 目标输入框</li>
-<li><code>Text*            m_pkFontInfo</code>: 输入框的字体信息(名字名称，大小)</li>
-<li><code>ImageView*     m_pkCursor</code>: 光标</li>
-<li><code>RepeatForever* m_pkCursorAction</code>: 光标的动画(一闪一闪的)</li>
-<li><code>std::string    m_kFinalStr</code>: 最终的字符串</li>
-<li><code>std::string     m_kShowStr</code>: 显示在输入框中的字符串</li>
-<li><code>float         m_afUnitWidth[sciBufferLength]</code>: 输入的字符的单个宽度</li>
-<li><code>float            m_fShowStrWidth</code>:显示的字符串的总宽度</li>
-<li><code>int            m_iShowLeftIndx,m_iShowRightIndx</code>:显示的字符串的两个索引[L,R),显示的字符串的总宽度就是这个半开半闭区间的和. </li>
-</ul>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title=" 初始化"></a><a name="init"> 初始化</a></h3><p>这里主要是初始化<code>m_pkFontInfo</code>和<code>m_pkCursorAction</code>。</p>
-<ul>
-<li>利用输入框中的字体信息<code>create</code>一个<em>Text*</em>出来，用于后面的<a href="#insert">输入字符串</a>处理单个字符.</li>
-<li><code>create</code>一个无限重复的动作，用于输入状态时光标闪动动画</li>
-<li>PS:记得<code>create</code>之后要<code>retain</code>一下，不然下一帧就成野指针了.</li>
-</ul>
-<p>PS: 初始记得把光标隐藏，因为开始不是输入状态.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m_pkFontInfo = Text::create(<span class="string">""</span>, m_pkField-&gt;getFontName(), m_pkField-&gt;getFontSize());</span><br><span class="line">CC_SAFE_REATAIN(m_pkFontInfo);</span><br></pre></td></tr></table></figure></p>
-<h3 id="打开输入法"><a href="#打开输入法" class="headerlink" title="打开输入法"></a><a name="attach">打开输入法</a></h3><h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a><a name="insert">输入</a></h3><h3 id="删除"><a href="#删除" class="headerlink" title=" 删除"></a><a name="del"> 删除</a></h3><h3 id="关闭输入法"><a href="#关闭输入法" class="headerlink" title="关闭输入法"></a><a name="dettach">关闭输入法</a></h3><h3 id="其他"><a href="#其他" class="headerlink" title=" 其他"></a><a name="other"> 其他</a></h3>	  
+	  <h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><h2 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h2><h3 id="Mysql-1"><a href="#Mysql-1" class="headerlink" title="Mysql"></a>Mysql</h3><p>着手写了Mysql存储数据.<br>这里利用了我们自定义的特性(Attribute)，也就是用在class field上面的[]，比如[obsote]表示过期。<br>如果要写入数据，我们得自定义种特性[DataEntityTable]表示这个结构要存入数据库。里面的字段用[DataEntityField]表示要存入的字段<br>在编译的时候，我们会把编译好的Assembly利用反射，找到带有[DataEntityTable]特性的类，和标有[DataEntityField]的字段，进行创建(修改)表.<br>这里还利用了一个名叫<code>MySql.Data.dll</code>的dll。主要用来执行sql语句，</p>
+<p>未完待续…</p>
+	  
 	</div>
 
 	<div>
@@ -159,14 +120,14 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/2015/12/04/cocos2d-x带光标的输入框TextField/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2015/11/29/编码规范中的奇淫邪技（个人向/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2016/05/22/FissureServer3/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -205,7 +166,7 @@
   <h2 class="title">留言</h2>
 
   
-  	 <div class="ds-thread" data-thread-key="2015/12/04/cocos2dx-TextField向左推进光标跟随/" data-title="Cocos2dx-TextField向左推进光标跟随" data-url="http://tsfissure.com/2015/12/04/cocos2dx-TextField向左推进光标跟随/"></div>  
+  	 <div class="ds-thread" data-thread-key="2016/05/27/FissureServer4/" data-title="FissureServer(四)" data-url="http://tsfissure.com/2016/05/27/FissureServer4/"></div>  
   
 </section>
 
@@ -219,7 +180,7 @@
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2015-12-04 
+	2016-05-27 
 	</div>
 	
 
@@ -232,7 +193,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/TextField/">TextField<span>2</span></a></li> <li><a href="/tags/cocos2dx/">cocos2dx<span>2</span></a></li>
+  <li><a href="/tags/GameServer/">GameServer<span>5</span></a></li>
     </ul>
 	</div>
 		

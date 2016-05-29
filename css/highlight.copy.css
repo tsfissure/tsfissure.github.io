@@ -88,11 +88,9 @@ pre code {
   float: right;
 }
 
-pre .comment{
-  color: #999
-}
+pre .comment,
 pre .title {
-  color: #e0ee0;
+  color: #999;
 }
 pre .variable,
 pre .attribute,
@@ -144,5 +142,5 @@ pre .coffeescript .title {
 }
 pre .keyword,
 pre .javascript .function {
-  color: #66CD00!important;
+  color: #c9c!important;
 }
