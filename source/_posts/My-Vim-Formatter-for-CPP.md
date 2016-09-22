@@ -4,7 +4,7 @@ date: 2016-09-21 15:29:37
 tags: Vim
 ---
 
-## Vim format for c/cpp 1.0 manual
+## Vim format for c/cpp manual
 
 ### 可用功能
 - 去掉多余空格
@@ -12,7 +12,7 @@ tags: Vim
 - 在`= ^ |`两边加空格
 - 在形如`+= *=`两边加空格
 
-<-- more -->
+<!-- more -->
 ### 使用
 ① 点击下载[tysformatter.vim](https://github.com/tsfissure/vim/tree/master/indent)
 ② 在你的`$VIMRUNTIME/indent/`目录下的c和cpp.vim中添加`source path`(`path`为刚才下载的tysextend.vim的存放路径)
