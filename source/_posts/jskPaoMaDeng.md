@@ -18,19 +18,18 @@ $$ answer = \sum\_{i=l}^r\sum\_{j=i}^rf(ij)=回文序列?\sum\_{k=i}^jA\_k:0 $$
 ### 思路
 - 我们利用`manacher`算法插入辅助数据后，每一个回文序列$[l,r]$都有一个中点$p$,如果$p$在询问$[L,R]$的**中间偏左**，那么我们可以get新区间$[max(L,l),p]$，这个区间内每一位置作为回文序列的左端点，$p$为中点形成的序列都对询问有贡献.贡献为：如果位置$p1$是插入的辅助数据,贡献为0,否则贡献为$value=sum(A\_{p1..p})\*2-A\_p=(preSum\_p-preSum\_{p1-1})\*2-A\_p$,用段树来维护一下这个公式就可以算了， **中间偏右**同理.
 
-- 对于询问$[L,R]$, 我们可以拆分成两部分$[L,Mid]$和$[Mid+1,R]$`(Mid = L + r >> 1)`,从左到右和从右到左分别排序离线询问一次，加起来就是结果了。
+- 对于询问$[L,R]$, 我们可以拆分成两部分$[L,Mid]$和$[Mid+1,R]\(Mid = L + R >> 1)$,从左到右和从右到左分别排序离线询问一次，加起来就是结果了。
 
-```cpp
+``` cpp
 #include <bits/stdc++.h>
 
 typedef long long LLONG;
 typedef std::pair<int, int> PII;
-#define out(x) std::cout << #x << " = " << x << std::endl;
 const int mod = 1e9 + 7;
 const int ciBufferSize = 2e5 + 10;
 #define DEFMID  int mid = l + r >> 1
-#define LSON    (v << 1)
-#define RSON    (v << 1 | 1)
+#define LSON    (v * 2)
+#define RSON    (v * 2 + 1)
 
 int A[ciBufferSize];
 int pA[ciBufferSize];
@@ -225,6 +224,4 @@ int main() {
   }
   return 0;
 }
-
 ```
-

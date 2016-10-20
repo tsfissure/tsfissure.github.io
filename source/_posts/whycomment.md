@@ -29,23 +29,22 @@ ___
   这对于只是熟悉项目的人来不是非常有必要，但对于需要维护更新的来说，是非常重要的，可能哪天在某个小功能(函数)出了个逻辑错误，维护人员或者写码的人怎么也想不起这里为什么要循环x次，那里为什么要除2，还有那里为什么要包装一下等等，这时候就头疼了。所以在关键或者逻辑复杂的地方注释一下，也是很有必要的。同时，这样写的代码会有什么需要在其他地方控制的也请写出来，比如调用某个函数之前需要在调用之前先初始化哪里变量什么的。
 ```cpp
 void shrink(int n) {    // shrink graph
-        for(int i = 0; i < n; ++i) {
-            for(int j = 0; j < edges[i].size(); ++j) {
-                edges[i][j] = cycle[edges[i][j]];   //Careful, this will create self-loop
-            }
+    for(int i = 0; i < n; ++i) {
+        for(int j = 0; j < edges[i].size(); ++j) {
+            edges[i][j] = cycle[edges[i][j]];   //Careful, this will create self-loop
         }
-        for(int i = 0; i < n; ++i) {
-            if(cycle[i] == i) continue;
-            int u = cycle[i];
-            for(int j = 0; j < edges[i].size(); ++j) {
-                edges[u].push_back(edges[i][j]);
-            }
-            edges[i].clear();
+    }
+    for(int i = 0; i < n; ++i) {
+        if(cycle[i] == i) continue;
+        int u = cycle[i];
+        for(int j = 0; j < edges[i].size(); ++j) {
+            edges[u].push_back(edges[i][j]);
         }
-        for(int i = 0; i < n; ++i) {//Remove the duplicate edges, Not always necessary
-            std::sort(edges[i].begin(), edges[i].end());
-            std::unique(edges[i].begin(), edges[i].end());
-        }
+        edges[i].clear();
+    }
+    for(int i = 0; i < n; ++i) {//Remove the duplicate edges, Not always necessary
+        std::sort(edges[i].begin(), edges[i].end());
+        std::unique(edges[i].begin(), edges[i].end());
     }
 }
 ```
