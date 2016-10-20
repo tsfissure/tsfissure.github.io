@@ -11,9 +11,8 @@ tags: 数据结构
 
 ### 题意
 在二维平面上有$N$个带权值点，你需要找一个长度不大于$L$的矩形区域，使得区域内权值和最大，记为$S$，并且要求找一个最小边长的矩形区域，也使得区域内权值和为$S$，输出$S$和最小边长
-- 范围
-$1\le N,L\le1e5$
-坐标$1\le x,y\le 1e5$
+- $1\le N,L\le1e5$
+- 坐标$1\le x,y\le 1e5$
 
 <!-- more -->
 
@@ -23,14 +22,13 @@ $1\le N,L\le1e5$
 用一个线段树维护$x$轴为矩形右边界每一个$y$为右下角顶点边长为$L$时的权值和的最大值
 也就是说对于点$(x_1,y_1)\lbrace x-L\le x_1\le x\rbrace$，将会给线段树的区间$[y_1-L,y_1]$都有贡献，因为这个区间内的点作为矩形右下角顶点时，矩形都能包含这个点.
 我们把线段树从左到右扫描完所有点，就能算出边长为$L$时的最大和了。
-
 ```cpp
 #include <bits/stdc++.h>
 
 typedef long long LLONG;
 typedef std::pair<int, int>PII;
-#define LSON v << 1
-#define RSON v << 1 | 1
+#define LSON v * 2
+#define RSON v * 2 + 1
 
 const int N = 1e5 + 10;
 const int MOD = 1e9 + 7;
