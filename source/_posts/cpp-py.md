@@ -1,7 +1,7 @@
 ---
 title: cpp python通信初探
 date: 2016-8-18 15:47:42
-tags: cpp-py
+tags: [cpp, py]
 ---
 
 ## 初衷
