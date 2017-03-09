@@ -62,8 +62,8 @@ body {
 }
 
 .page, .post{
-  line-height: 1.5em;
-  font-family: 'Open Sans',"Helvetica Neue", "Helvetica","Microsoft YaHei", "WenQuanYi Micro Hei",Arial, sans-serif;
+  line-height: 1.6em;
+  font-family: '华文中宋', 'Times New Roman', 'Open Sans',"Helvetica Neue", "Helvetica","Microsoft YaHei", "WenQuanYi Micro Hei",Arial, sans-serif;
 }
 
 .page .more {

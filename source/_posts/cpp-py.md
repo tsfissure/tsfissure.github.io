@@ -113,3 +113,4 @@ over.入门还是挺简单的.
 
 ## python 调用cpp
 
+转[swig](/2016/12/15/cppswig/)
