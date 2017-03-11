@@ -26,8 +26,8 @@ topy.h
 
 class Topy{
 public:
-	void say();
-	int convert(int k);
+    void say();
+    int convert(int k);
 };
 ```
 topy.cpp
@@ -38,11 +38,11 @@ topy.cpp
 #include <iostream>
 
 void Topy::say(){
-	std::cout << "hello swig..." << std::endl;
+    std::cout << "hello swig..." << std::endl;
 }
 
 int Topy::convert(int k){
-	return k + 100;
+    return k + 100;
 }
 ```
 

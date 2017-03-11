@@ -1,5 +1,5 @@
 ---
-title: 垃圾lua
+title: lua黑(?)
 date: 2017-02-15 14:50:02
 tags: [杂谈,lua]
 ---
