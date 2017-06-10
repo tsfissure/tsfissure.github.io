@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>连号区间数+CF526F[CF] | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="连号区间数+CF526F[CF]"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 连号区间数+CF526F[CF]</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h3 id="CF题目链接"><a href="#CF题目链接" class="headerlink" title="CF题目链接"></a><a href="http://codeforces.com/contest/526/problem/F" target="_blank" rel="external">CF题目链接</a></h3><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><ul>
+<li>【CF题意】：在N*N的二维矩阵上有N个点，一定是一行或者一列，有且仅有一个数，总有多少个子矩阵，也满足一行或一列，有且仅有一个数,N为30万.</li>
+<li>【蓝桥杯题意】：给出N个数的某个排列，求出有多少个子序列，把它排序后是连续递增的.N为5万.<a id="more"></a>
+</li>
+</ul>
+<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>这是一个两年前就折磨了我的题目..本来我已经忘了这事儿，没想到前几天在某群里看见有人问这个问题了，一下子勾起了我的回忆.在13年的蓝桥杯省赛中，最后一道压轴题就是连号区间数，当时写了个$O(n^2)$的算法水了一下，后来在蓝桥杯官网中也发现数据比较水，N方随便过,我只知道这个算法是不科学的，但想了好久，也没搞定这题，后来渐渐的就忘了..<br>前两天看见有人问起这题，说是线段树是一个科学的解法，还给了一个<a href="http://codeforces.com/blog/entry/17281?#comment-220930" target="_blank" rel="external">题解链接</a>,于是我突然又兴奋了，决定解决掉这题…</p>
+<h3 id="正题"><a href="#正题" class="headerlink" title="正题"></a>正题</h3><ul>
+<li>主要算法：dp &amp; 线段树</li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>对于<code>A[1...N]</code>的一个子序列<code>A[j...i](i &gt;= j)</code>，令区间内最大值<code>maxValue = max(A[j...i])</code>,最小值<code>minValue = min(A[j...i])</code>可以得到一个公式<code>maxValue - minValue &gt;= i - j</code>,当<code>maxValue - minValue == i - j</code>的时候，我们的答案+1,把<code>j</code>移到左边转换一下就成了<code>maxValue - minValue + j == i</code>;<br>所以我们维护一下等式左边的值<code>dp[p]</code>，当我们从左到右枚举<code>A[i]</code>,看有多少个位置p的结果等于k就可以得出答案了<code>(p&lt;=i)</code>，<br>怎么维护呢？</li>
+<li>我们设函数<code>f(j) = maxValue - minValue + j</code>(注意maxValue和minValue一直在变).<br>我们可以用一棵线段树来维护，每个节点<code>seg[k]</code>范围为l到r，表示的是枚举到i时，l到r范围内有多少个<strong>最小值fMinLR</strong>,<code>fMinLR = min(f(j)),(l &lt;= j &lt;= r)</code><br>我们初始时所有叶子节点都为对应的位置p</li>
+<li>对于第i个数<code>A[i]</code>,我们可以找到一个j满足:j要尽量小，而且<code>A[j - 1] &lt; A[i]</code>,找到一个k满足:k要尽量小而且<code>A[k - 1] &gt; A[i]</code>, 这时候区间[j,i]的最大值maxValue等于A[i],区间[k, i]的最小值minValue是A[i],所以这时候区间更新(区间+maxValue,区间-minValue)就可以得出区间内所有的f(x)值了<br>枚举完A[i]该枚举下一个了A[i + 1],会有新的区间[j1,i + 1],[k1, i + 1],更新新区间的时候会和这次的更新重叠，所以要把这次更新的恢复回去(重叠部分)，然后才能进行下次更新。<br>差不多就这样了…</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(linker,<span class="meta-string">"/STACK:102400000,102400000"</span>)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">namespace</span> Defination &#123;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LLONG;</div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> sciArraySize = <span class="number">3e5</span> + <span class="number">10</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> debug(x) std::cout &lt;&lt; #x &lt;&lt; <span class="meta-string">" = "</span> &lt;&lt; x &lt;&lt; std::endl;</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Defination;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SegmentTree</span> &#123;</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LSON    (v &lt;&lt; 1)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> RSON    (v &lt;&lt; 1 | 1)</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">    minValue[v] = l;</div><div class="line">    <span class="keyword">if</span> (l &gt;= r) &#123;</div><div class="line">      countOfMinValue[v] = <span class="number">1</span>;</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">    build(l, mid, LSON);</div><div class="line">    build(mid + <span class="number">1</span>, r, RSON);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">int</span> <span class="title">getCountWithValue</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> mv)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> minValue[v] + lazy[v] == mv ? countOfMinValue[v] : <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">pushUp</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> mv = <span class="built_in">std</span>::min(minValue[LSON] + lazy[LSON], minValue[RSON] + lazy[RSON]);</div><div class="line">    minValue[v] = mv;</div><div class="line">    countOfMinValue[v] = getCountWithValue(LSON, mv) + getCountWithValue(RSON, mv);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">pushDown</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (lazy[v]) &#123;</div><div class="line">      lazy[LSON] += lazy[v];</div><div class="line">      lazy[RSON] += lazy[v];</div><div class="line">      lazy[v] = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> addValue, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (l &gt;= x &amp;&amp; r &lt;= y) &#123;</div><div class="line">      lazy[v] += addValue;</div><div class="line">      <span class="keyword">if</span> (x &gt;= y) countOfMinValue[v] = <span class="number">1</span>;</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    pushDown(v);</div><div class="line">    <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span> (mid &gt;= x) update(l, mid, x, y, addValue, LSON);</div><div class="line">    <span class="keyword">if</span> (mid &lt; y) update(mid + <span class="number">1</span>, r, x, y, addValue, RSON);</div><div class="line">    pushUp(v);</div><div class="line">  &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">  <span class="keyword">int</span> minValue[sciArraySize &lt;&lt; <span class="number">2</span>];  <span class="comment">//区间内最小值</span></div><div class="line">  <span class="keyword">int</span> lazy[sciArraySize &lt;&lt; <span class="number">2</span>];</div><div class="line">  <span class="keyword">int</span> countOfMinValue[sciArraySize &lt;&lt; <span class="number">2</span>]; <span class="comment">//f(x)最小值计数</span></div><div class="line">&#125; tree;</div><div class="line"></div><div class="line"><span class="keyword">int</span> A[sciArraySize];</div><div class="line"><span class="keyword">int</span> dpLager[sciArraySize];  <span class="comment">//dp[i] = j 表示区间[j,i]的最小值是A[i],[1, j - 1]的最小值大于A[i]</span></div><div class="line"><span class="keyword">int</span> dpLower[sciArraySize];  <span class="comment">//dp[i] = k 表示区间[k,i]的最大值是A[i],[1, k - 1]的最大值小于A[i]</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> n;</div><div class="line">  LLONG answer = <span class="number">0</span>;</div><div class="line">  <span class="built_in">std</span>::<span class="built_in">cin</span> &gt;&gt; n;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</div><div class="line">    <span class="keyword">int</span> r, c;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span> &gt;&gt; r &gt;&gt; c;</div><div class="line">    A[r] = c;</div><div class="line">  &#125;</div><div class="line">  tree.build(<span class="number">1</span>, n, <span class="number">1</span>);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</div><div class="line">    <span class="keyword">for</span> (dpLower[i] = i - <span class="number">1</span>; dpLower[i] &gt; <span class="number">0</span> &amp;&amp; A[dpLower[i]] &lt;= A[i]; dpLower[i] = dpLower[dpLower[i]])</div><div class="line">      tree.update(<span class="number">1</span>, n, dpLower[dpLower[i]] + <span class="number">1</span>, dpLower[i], -A[dpLower[i]], <span class="number">1</span>);</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (dpLager[i] = i - <span class="number">1</span>; dpLager[i] &gt; <span class="number">0</span> &amp;&amp; A[dpLager[i]] &gt;= A[i]; dpLager[i] = dpLager[dpLager[i]])</div><div class="line">      tree.update(<span class="number">1</span>, n, dpLager[dpLager[i]] + <span class="number">1</span>, dpLager[i], A[dpLager[i]], <span class="number">1</span>);</div><div class="line"></div><div class="line">    tree.update(<span class="number">1</span>, n, dpLower[i] + <span class="number">1</span>, i, A[i], <span class="number">1</span>);</div><div class="line">    tree.update(<span class="number">1</span>, n, dpLager[i] + <span class="number">1</span>, i, -A[i], <span class="number">1</span>);</div><div class="line"></div><div class="line">    answer += tree.getCountWithValue(<span class="number">1</span>, i);</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; answer &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/01/17/jskPaoMaDeng/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/12/04/cocos2d-x带光标的输入框TextField/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/01/02/连号区间数-CF526F/" data-title="连号区间数+CF526F[CF]" data-url="http://tsfissure.com/2016/01/02/连号区间数-CF526F/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-01-02 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>

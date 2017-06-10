@@ -1,0 +1,282 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>浅谈程序注释 | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="浅谈程序注释"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 浅谈程序注释</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>入职三个月，国庆回来开始看公司底层框架，Yeah~,老大要带我起(<del>入</del>)飞(<del>坑</del>)了.<br>老大的代码很是高端，函数一层又一层的，对新东西还是需要花点时间来学习的.<br>突然就回想起刚入职的时候，看和我合作的客户端同事太忙，准备帮一下，可是我一打开他的代码，我这想法就被我收回了。于是在某脉匿名区发了一贴，大概说”你们遇到没有注释，而且函数名变量名也表达不清的代码怎么办”.结果评论画风大概是”你太年轻了”,”程序本身应具有自我描述性,你代码写得少”之类。也有吐槽自己代码不注释三个月回头不认识的。</p>
+<p><strong>规范</strong>必然重要，但<strong>注释</strong>的角色的重要性也不容小觑。</p>
+<a id="more"></a>
+<h2 id="为什么需要注释"><a href="#为什么需要注释" class="headerlink" title="为什么需要注释"></a>为什么需要注释</h2><hr>
+<p>正如上面所说，自己写的代码，三个月，回头看自己的代码，不认识。<br>你说你记性很好，看一眼函数名就能想起曾经为什么要写它，它的功能是啥。那别人来看的时候呢？<br>你说你代码很规范，函数名变量名取得很简单粗暴易懂。我想这对于你同事(熟悉你项目的人)来说，应该不会有什么困难，但来了一个新人，对项目不熟悉，对函数调来调去搞得晕头转向的，鬼知道你干嘛要这样写啊(有点牵强了)。</p>
+<p>我觉得最重要的一点也就是上面最后一点，写代码不仅仅是为了将来自己能看懂，更重要的是新人(不熟悉项目的人)能够花费<strong>更少的时间</strong>了解到代码意图。</p>
+<h2 id="什么是好的注释"><a href="#什么是好的注释" class="headerlink" title="什么是好的注释"></a>什么是好的注释</h2><hr>
+<ul>
+<li>英文注释<br>这虽然会有一定程度上的阅读影响，但为了防止编码的问题，英语太差也不打紧，英文总比乱码好，想起，刚入职接手第一个小游戏的时候，常定义文件的注释，就被我用vim搞乱码了，回不去了。。。</li>
+<li><p>细节注释<br>这对于只是熟悉项目的人来不是非常有必要，但对于需要维护更新的来说，是非常重要的，可能哪天在某个小功能(函数)出了个逻辑错误，维护人员或者写码的人怎么也想不起这里为什么要循环x次，那里为什么要除2，还有那里为什么要包装一下等等，这时候就头疼了。所以在关键或者逻辑复杂的地方注释一下，也是很有必要的。同时，这样写的代码会有什么需要在其他地方控制的也请写出来，比如调用某个函数之前需要在调用之前先初始化哪里变量什么的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">shrink</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;    <span class="comment">// shrink graph</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; edges[i].size(); ++j) &#123;</div><div class="line">            edges[i][j] = cycle[edges[i][j]];   <span class="comment">//Careful, this will create self-loop</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">        <span class="keyword">if</span>(cycle[i] == i) <span class="keyword">continue</span>;</div><div class="line">        <span class="keyword">int</span> u = cycle[i];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; edges[i].size(); ++j) &#123;</div><div class="line">            edges[u].push_back(edges[i][j]);</div><div class="line">        &#125;</div><div class="line">        edges[i].clear();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;<span class="comment">//Remove the duplicate edges, Not always necessary</span></div><div class="line">        <span class="built_in">std</span>::sort(edges[i].begin(), edges[i].end());</div><div class="line">        <span class="built_in">std</span>::unique(edges[i].begin(), edges[i].end());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这是我强连通模板的缩图部分，我在两个细节地方写了注释，一个是那里会造成自环，如果不要自环，需要控制一下，一个是去掉重边，并不是每个强连通都需要，视情况而定。我想这是相当不错的，</p>
+<p>当然你也不应该在很简单的小细节旁边写上注释</p>
+</li>
+<li><p>去掉多余注释<br>记得好像在哪里看见过说注释占有比在多少之间比较合适，我忘了，但我想这没有固定说法，在认为该注释的地方注释，不该注释的地方，就不要注释了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (query() &gt;= <span class="number">300</span>) &#123;</div><div class="line"><span class="comment">// if products exceed 300, update</span></div><div class="line">    update();</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line"><span class="comment">// less than 300, add one</span></div><div class="line">    add();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>比如这样的注释，else那里是没必要的了。</p>
+</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/10/18/dontusefloat/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/09/21/My-Vim-Formatter-for-CPP/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/10/10/whycomment/" data-title="浅谈程序注释" data-url="http://tsfissure.com/2016/10/10/whycomment/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-10-10 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/杂谈/">杂谈<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>

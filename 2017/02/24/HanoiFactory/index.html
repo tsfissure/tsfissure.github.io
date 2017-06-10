@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>HanoiFactory[CF] | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="HanoiFactory[CF]"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> HanoiFactory[CF]</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a><a href="http://codeforces.com/problemset/problem/777/E" target="_blank" rel="external">题目链接</a></h2><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>汉诺塔由无数个空心圆柱堆积而成。现有$N$个空心圆柱,第$i$个圆柱的内径，外径高分别是$a_i,b_i,h_i$,问这些圆柱最高能堆多高的塔，堆积方式是从下往上:</p>
+<ul>
+<li>第$x$个的外径$b_x $要大于等于第$x+1$个的外径$b_{x+1}(b_x \ge b_{x+1})$</li>
+<li>第$x$个的内径$a_x $要小于第$x+1$个的外径$b_{x+1}(a_x \lt b_{x+1})$</li>
+</ul>
+<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><hr>
+<p>这题的解法并不难，不过有个有意思的trick。<br><a id="more"></a><br>而且这是<strong>第一次</strong>打CF能够ak。所以随便记录一下.</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法:"></a>解法:</h3><hr>
+<p>可以贪心dp等方式，我用的是线段树.<br>首先把ab离散化。按b从大到小排序，这样就能保证排序后的第i个圆柱来说，前面i-1个圆柱都满足第一个条件.<br>然后我们就可以用线段树维护前i-1个中每一个a。能够堆的最高的塔.对于第i个圆柱来说.只要找前面所有的a中小于b的。能够堆得最高的.再加上第i个的高度，就是第i个圆柱能够堆的最高高度了.同时把ai在线段树中更新一下.时间复杂度$O(nlgn)$.</p>
+<p>然后有意思的trick来了.这个trick让很多人都wa了至少一次.<br>当圆柱的b不同的时候，从大到小排序.那么当b相同的时候呢?这里正确的是把a也从大到小排序。因为这样才能让后面能堆得尽量高，有个例子<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">4</span></div><div class="line"><span class="number">3</span> <span class="number">7</span> <span class="number">2</span></div><div class="line"><span class="number">5</span> <span class="number">7</span> <span class="number">2</span></div><div class="line"><span class="number">4</span> <span class="number">7</span> <span class="number">2</span></div><div class="line"><span class="number">4</span> <span class="number">4</span> <span class="number">2</span></div></pre></td></tr></table></figure></p>
+<p>这里如果a不从大到小排序，那么对于[3 7 2]这个圆柱来说，最高的是2，后面[4 4 2]的时候只能搭在[3 7 2]上面结果为4.这是不对的。<br>为当a从大到小排后[3 7 2]可以搭在另外两个上面高度为6.然后[4 4 2]再塔在[3 7 2]上面。结果为8.</p>
+<hr>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LLONG;</div><div class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; PII;</div><div class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; MII;</div><div class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::pair&lt;PII, <span class="keyword">int</span>&gt; PIIAI;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</div><div class="line"></div><div class="line">PIIAI towers[N];</div><div class="line">MII hs;</div><div class="line"><span class="keyword">int</span> fp[N];</div><div class="line">LLONG sg[N &lt;&lt; <span class="number">4</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, LLONG mv, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (l &gt;= r) &#123;</div><div class="line">    sg[v] = mv;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">  <span class="keyword">if</span> (mid &gt;= x) &#123;</div><div class="line">    modify(l, mid, x, mv, v &lt;&lt; <span class="number">1</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    modify(mid + <span class="number">1</span>, r, x, mv, v &lt;&lt; <span class="number">1</span> | <span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  sg[v] = <span class="built_in">std</span>::max(sg[v &lt;&lt; <span class="number">1</span>], sg[v &lt;&lt; <span class="number">1</span> | <span class="number">1</span>]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> LLONG <span class="title">query</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (l &gt;= x &amp;&amp; r &lt;= y) &#123;</div><div class="line">    <span class="keyword">return</span> sg[v];</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">  LLONG rlt = <span class="number">0</span>;</div><div class="line">  <span class="keyword">if</span> (mid &gt;= x) &#123;</div><div class="line">    rlt = query(l, mid, x, y, v &lt;&lt; <span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (mid &lt; y) &#123;</div><div class="line">    rlt = <span class="built_in">std</span>::max(rlt, query(mid + <span class="number">1</span>, r, x, y, v &lt;&lt; <span class="number">1</span> | <span class="number">1</span>));</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> rlt;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> n;</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">    <span class="keyword">int</span> a, b, h;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, &amp;a, &amp;b, &amp;h);</div><div class="line">    hs[a] = <span class="number">1</span>;</div><div class="line">    hs[b] = <span class="number">1</span>;</div><div class="line">    towers[i] = &#123;&#123;a, b&#125;, h&#125;;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> pn = <span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span> (MII::iterator iter = hs.begin(); iter != hs.end(); ++iter) &#123;</div><div class="line">    iter-&gt;second = ++pn;</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">std</span>::sort(towers, towers + n, [](PIIAI <span class="keyword">const</span> &amp; a, PIIAI <span class="keyword">const</span> &amp; b) &#123;</div><div class="line">    <span class="keyword">if</span> (a.first.second == b.first.second) &#123; <span class="keyword">return</span> a.first.first &gt; b.first.first; &#125;</div><div class="line">    <span class="keyword">return</span> a.first.second &gt; b.first.second;</div><div class="line">  &#125;);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">    <span class="keyword">int</span> a = towers[i].first.first;</div><div class="line">    <span class="keyword">int</span> b = towers[i].first.second;</div><div class="line">    <span class="keyword">int</span> f = hs[b];</div><div class="line">    <span class="keyword">int</span> ff = hs[a];</div><div class="line">    LLONG cur = query(<span class="number">1</span>, pn, <span class="number">1</span>, f - <span class="number">1</span>, <span class="number">1</span>);</div><div class="line">    modify(<span class="number">1</span>, pn, ff, cur + towers[i].second, <span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%I64d\n"</span>, sg[<span class="number">1</span>]);</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<p>顺便记录下第一次ak截图.<br><img src="/img/cfak.png" alt="cffirstak"></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2017/04/18/hr-wk31-6/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/02/15/lowlua/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2017/02/24/HanoiFactory/" data-title="HanoiFactory[CF]" data-url="http://tsfissure.com/2017/02/24/HanoiFactory/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-02-24 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 20) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "60%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</body>
+   </html>

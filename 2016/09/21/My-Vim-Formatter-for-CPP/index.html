@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Vim tysformatter.vim Manual | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Vim tysformatter.vim Manual"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Vim tysformatter.vim Manual</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="Vim-format-for-c-cpp-manual"><a href="#Vim-format-for-c-cpp-manual" class="headerlink" title="Vim format for c/cpp manual"></a>Vim format for c/cpp manual</h2><h3 id="可用功能"><a href="#可用功能" class="headerlink" title="可用功能"></a>可用功能</h3><ul>
+<li>去掉多余空格</li>
+<li>在花括号两边加空格</li>
+<li>在<code>= ^ |</code>两边加空格</li>
+<li>在形如<code>+= *=</code>两边加空格</li>
+</ul>
+<a id="more"></a>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>① 点击下载<a href="https://github.com/tsfissure/vim/tree/master/indent" target="_blank" rel="external">tysformatter.vim</a><br>② 在你的<code>$VIMRUNTIME/indent/</code>目录下的c和cpp.vim中添加<code>source path</code>(<code>path</code>为刚才下载的tysextend.vim的存放路径)<br>③ 打开C或者C++文件按<code>F2</code>即可完成格式化,如果不喜欢<code>F2</code>或者被其他占用，可以<code>tysformatter.vim</code>的最后那个映射修改成你想要的<br>④ 格式化完成是会提示<code>Format Over</code>，你可以在<code>tysformatter.vim</code>中找到这字符串进行修改或者把那行删掉(不提示)<br>⑤ 建议用这格式化后再加一个<code>gg=G</code>命令缩进，因为我没加缩进，必要性不大</p>
+<h3 id="我的粗暴实现"><a href="#我的粗暴实现" class="headerlink" title="我的粗暴实现"></a>我的粗暴实现</h3><p>需要在旁边添加空格的符号被我分成了四类:</p>
+<blockquote>
+<p>  1, 需要在左边加空格如<code>{</code><br>  2, 需要在右边加空格如<code>; }</code><br>  3, 需要在两边加空格的单个符号如<code>^ | =</code><br>  4, 需要在两边加空格的两个符号如<code>&gt;&gt; &lt;&lt; == +=</code></p>
+</blockquote>
+<p>遍历文件每一行，对一行单独处理,取出那行为<code>text</code>，修改过程中也是对<code>text</code>修改，先是去掉多余空格，然后需要右边加的加上，左边的两边的依次加上。如果这行有修改，就把修改过后的<code>text</code>,<code>set</code>回去</p>
+<h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><p>部分符号如<code>+,-,&gt;,&lt;</code>等没有处理，比较复杂，在后续心(灵)血(感)来(涌)潮(现)的时候一个个补上<br>把<code>{，else</code>等按设置处理是否新行<br>…</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/10/10/whycomment/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/08/22/maxgrid-cc/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/09/21/My-Vim-Formatter-for-CPP/" data-title="Vim tysformatter.vim Manual" data-url="http://tsfissure.com/2016/09/21/My-Vim-Formatter-for-CPP/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-09-21 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Vim/">Vim<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>

@@ -1,0 +1,283 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Lua黑(?) | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Lua黑(?)"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Lua黑(?)</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>最近逐渐变成了lua黑，群里也时不时的和二小姐(一位lua粉)怼一波。<br>游戏行业用到lua那也是大家公认的好，优势不计其数。到底是什么原因让我对它如此抵触？几点无关痛痒的主观认识让我不太喜欢用它。</p>
+<a id="more"></a>
+<h3 id="非人类的luasocket"><a href="#非人类的luasocket" class="headerlink" title="非人类的luasocket"></a>非人类的luasocket</h3><hr>
+<p>大约两个多月前，和一朋友合作说写个小手机网游出来，他用的cocos引擎C++和lua。为了给他省事。自然想到直接使用lua那边的socket他应该使用起来更方便。可是我先自己写了个<del>低配</del>demo来测的时候发现</p>
+<ul>
+<li>发送和接收数据要以\n或者\r结尾(哪个语言有你这蛋疼要求?)</li>
+<li>收不到char的13,因为这是\r(exo me??哪个语言像你这样?)</li>
+</ul>
+<p>当然上面这两点实际上是我使用不当的原因造成的(<del>网搜不靠谱系列</del>).后来朋友在官方文档里解决了这两个问题。但也是在我们决定还是使用c++的网络模块，并且使用一段时间后因为他有些控制不当，他才决定研究官方文档使用luasocket.(<del>于是我们的填坑之路起航…</del>)</p>
+<h3 id="供不应求的库"><a href="#供不应求的库" class="headerlink" title="供不应求的库"></a>供不应求的库</h3><hr>
+<p>也是大约两个月前，我传了一个json数据给他。他在JSON.decode的时候报错，因为必须是utf-8而我收到的是unicode(有中文).当时为了赶进度，懒得研究了，于是把我这边传的内容改改改改，用其他方式传递给他。可是吖，前些天我一不小心又传了几个有中文的json串给他。他又报错了，我这才回想起当初这问题没有根治。我让他把unicode转成utf-8他也说lua没有现成可用的接口,当时倒是网上搜了段可用代码先用着了.<br>在设计战斗回放功能的时候，我说数据量特别大，需要用zip压缩一下再发给客户端，发现，也没有现成的zlib库可以用(<del>这似乎是我搜索方式不对</del>)，不过这功能还在后面,到时候再仔细研究一下.</p>
+<h3 id="嗤之以鼻的速度"><a href="#嗤之以鼻的速度" class="headerlink" title="嗤之以鼻的速度"></a>嗤之以鼻的速度</h3><hr>
+<p>这里的速度，不是说运行速度慢，lua的运行速度比我们python还是是要快那么一些的.我说的速度，还是luasocket。<br>使用luasocket期间，一切还算是比较正常，没有出什么大的问题，连接断开也控制得比较好.直到…<br>因为我们要在游戏中使用语音功能.我们选择的方式是客户端使用第三方工具录音，然后把二进制通过服务器转发给另外几个玩家，再进行组装mp3播放.然后问题就来了,录个二十秒半分钟的语音。二进制的长度达四五万的样子，突然发现，另外几个玩家收不到语音，而且一发语音之后发现所有的数据都收不到了.开始我们对服务端的socket进行了质疑，经过各种验证发现没问题，最后定位为数据太长luasocket接收不过来或者是超出了它所能一次接收的范围然后客户端就不会去取(我们取数据的方式是达到规定的长度后才会去socket里面取),于是我们认为分包就能解决这个问题，把语音数据分成多个包，把一个包的数据量控制在1500，于是我们发现了另外一个更让人想骂街的问题. 连续发送超过20个包给客户端的时候，因为处理不过来，导致后面几个包会<strong>超时重发</strong>(<del>哭</del>)，为解决个问题，语音发送方又控制了一下把多个包分在多帧发.发现并不能彻底解决问题，而且也认为就算把语音问题解决了，后面难保不会出现连续几十个包发过来..经过商讨，终于还是决定，<strong>放弃luasocket</strong></p>
+<h2 id="综上"><a href="#综上" class="headerlink" title="综上"></a>综上</h2><hr>
+<p>让我对lua越来越黑的原因，大概就是这两点了</p>
+<ul>
+<li>没有优秀的网络模块，只有依靠别的语言才能存活(虽然人们对lua一直以来的定位就是辅助)</li>
+<li>没有足够的库支持，很多都得再造轮子or依靠其他语言</li>
+</ul>
+<p>这应该算是我对lua的使用不恰当，造成了我这想法，正确使用lua的方式，就应该是打辅助方便热更.</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2017/02/24/HanoiFactory/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/01/06/pymssql/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2017/02/15/lowlua/" data-title="Lua黑(?)" data-url="http://tsfissure.com/2017/02/15/lowlua/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-02-15 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/lua/">lua<span>2</span></a></li> <li><a href="/tags/杂谈/">杂谈<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>

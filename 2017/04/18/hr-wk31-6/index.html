@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Nominating Group Leaders[HR] | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Nominating Group Leaders[HR]"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Nominating Group Leaders[HR]</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a><a href="https://www.hackerrank.com/contests/w31/challenges/nominating-group-leaders" target="_blank" rel="external">题目链接</a></h2><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>t组测试<br>n个数g个询问<br>每次询问l r x，表示区间[l,r]里的数出现x次的数，是哪个，如果有多个输出最小的，没有则输出-1</p>
+<p>$1\le t \le 5$<br>$1\le n, g \le 10^5$<br>$0 \le l \le r \le n - 1$<br>$0 \le a_i \le n - 1$<br>$1 \le x \le n$</p>
+<p>题意是不是简单明了？简化了的，原描述非常复杂.<br><a id="more"></a></p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><hr>
+<p>auther的解法是平方分割,思路非常复杂,代码量也不小.<br>我的解法很简单，是用主席树，询问的时候在树上枚举下去，加个剪枝即可保证时间复杂度.<br>首先建树的方式和常规主席树一样，对每个数(1~1e5)简历版本.<br>1,询问的时候树上枚举每个数出现了多少次.这样时间复杂度是n，有些没有出现的数也遍历了。所以第一个剪枝就是去掉没有出现过的数，剪枝的方法就是区间内出现了数的数量和，如果小于x，就跳过这区间就跳过，间接去掉一些不满足条件的.<br>2,如果数据是1 2 3 4 5 … n - 1, n - 1.然后询问是0 n 2这样的话。第一个剪枝就不管用了，因为除开叶子节点的所有区间出现的数量和都大于等于2.时间还是n，所以第二个剪枝就是，加个最大最小剪枝。就是在区间保存一个出现过的数最大次数和最小次数，如果x没有在这区间内，就跳过。这样的话，这样的数据就是logn了。<br>第一个剪枝能不能去掉呢？可以，就是在初始的时候没有出现过的数， 假设出现了n+1次，这样的话，就一定不是满足的.</p>
+<p>cdde:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LLONG;</div><div class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; PII;</div><div class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; MII;</div><div class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::pair&lt;PII, <span class="keyword">int</span>&gt; PIIAI;</div><div class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; VI;</div><div class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;PII&gt; VPII;</div><div class="line"></div><div class="line"><span class="comment">//#define TDEBUG</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> TDEBUG</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> tout(x) std::cerr &lt;&lt; #x &lt;&lt; <span class="meta-string">" = "</span> &lt;&lt; x &lt;&lt; std::endl;</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> tdebug(args...) &#123; std::cerr <span class="meta-string">&lt;&lt; "(" &lt;&lt; #args &lt;&lt; ") = &gt; "; dbg, args; std::cerr &lt;&lt; std::endl; &#125;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">else</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> tout(x) <span class="comment">//skip all</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> tdebug(args...)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Debuger</span> &#123;</span></div><div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line">  Debuger&amp; <span class="keyword">operator</span>, (<span class="keyword">const</span> T&amp; v) &#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; v &lt;&lt; <span class="string">" "</span>;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">  &#125;</div><div class="line">&#125; dbg;</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">scaf</span><span class="params">(T&amp;v)</span> </span>&#123;</div><div class="line">  <span class="keyword">char</span> ch = getchar();</div><div class="line">  <span class="keyword">int</span> sgn = <span class="number">1</span>;</div><div class="line">  <span class="keyword">for</span> (; <span class="string">'-'</span> != ch &amp;&amp; (ch &lt; <span class="string">'0'</span> || ch &gt; <span class="string">'9'</span>); ch = getchar());</div><div class="line">  <span class="keyword">if</span> (<span class="string">'-'</span> == ch) sgn = <span class="number">-1</span>, v = <span class="number">0</span>;</div><div class="line">  <span class="keyword">else</span> v = ch - <span class="string">'0'</span>;</div><div class="line">  <span class="keyword">for</span> (ch = getchar(); ch &gt;= <span class="string">'0'</span> &amp;&amp; ch &lt;= <span class="string">'9'</span>; ch = getchar()) v = (v &lt;&lt; <span class="number">1</span>) + (v &lt;&lt; <span class="number">3</span>) + ch - <span class="string">'0'</span>;</div><div class="line">  v *= sgn;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">1e-8</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">QueryParam</span> &#123;</span></div><div class="line">  <span class="keyword">int</span> l, k, idx;</div><div class="line">  QueryParam() &#123; &#125;</div><div class="line">  QueryParam(<span class="keyword">int</span> ll, <span class="keyword">int</span> kk, <span class="keyword">int</span> idxx) &#123;</div><div class="line">    l = ll;</div><div class="line">    k = kk;</div><div class="line">    idx = idxx;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;QueryParam&gt; qs[N];</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SegTree</span> &#123;</span></div><div class="line">  <span class="keyword">int</span> ls, rs, votes;</div><div class="line">  <span class="keyword">int</span> mx, mn;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">assign</span><span class="params">(<span class="keyword">int</span> lss, <span class="keyword">int</span> rss, <span class="keyword">int</span> votess)</span> </span>&#123;</div><div class="line">    ls = lss;</div><div class="line">    rs = rss;</div><div class="line">    votes = votess;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setMx</span><span class="params">(<span class="keyword">int</span> mxx, <span class="keyword">int</span> mnn)</span> </span>&#123;</div><div class="line">    tdebug(mxx, mnn);</div><div class="line">    mx = mxx;</div><div class="line">    mn = mnn;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">static</span> <span class="keyword">int</span> stTotoal;</div><div class="line">&#125; tree[N * <span class="number">10</span>];</div><div class="line"><span class="keyword">int</span> troot[N];</div><div class="line"><span class="keyword">int</span> SegTree::stTotoal = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">  SegTree::stTotoal = <span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; ++i) &#123;</div><div class="line">    qs[i].clear();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> v = SegTree::stTotoal++;</div><div class="line">  tree[v].votes = <span class="number">0</span>;</div><div class="line">  tree[v].setMx(<span class="number">0</span>, N);</div><div class="line">  <span class="keyword">if</span> (l &lt; r) &#123;</div><div class="line">    <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">    tree[v].ls = build(l, mid);</div><div class="line">    tree[v].rs = build(mid + <span class="number">1</span>, r);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> v;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, <span class="keyword">int</span> last)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> v = SegTree::stTotoal++;</div><div class="line">  <span class="keyword">int</span> curVotes = tree[last].votes + <span class="number">1</span>;</div><div class="line">  tree[v].assign(tree[last].ls, tree[last].rs, curVotes);</div><div class="line">  <span class="keyword">if</span> (l &lt; r) &#123;</div><div class="line">    <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span> (mid &gt;= x) &#123;</div><div class="line">      tree[v].ls = modify(l, mid, x, tree[last].ls);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      tree[v].rs = modify(mid + <span class="number">1</span>, r, x, tree[last].rs);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> ls = tree[v].ls, rs = tree[v].rs;</div><div class="line">    <span class="keyword">int</span> mxx = <span class="built_in">std</span>::max(tree[ls].mx, tree[rs].mx);</div><div class="line">    <span class="keyword">int</span> mnn = <span class="built_in">std</span>::min(tree[ls].mn, tree[rs].mn);</div><div class="line">    tree[v].setMx(<span class="built_in">std</span>::max(tree[last].mx, mxx), <span class="built_in">std</span>::min(tree[last].mn, mnn));</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    tree[v].setMx(<span class="built_in">std</span>::max(tree[last].mx, curVotes), <span class="built_in">std</span>::min(tree[last].mn, curVotes));</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> v;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> tl, <span class="keyword">int</span> tr, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> cv = tree[tr].votes - tree[tl].votes;</div><div class="line">  tdebug(tree[tr].mx, tree[tr].mn);</div><div class="line">  <span class="keyword">if</span> (tree[tr].mx &lt; k || tree[tr].mn &gt; k) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</div><div class="line">  <span class="keyword">if</span> (cv &lt; k) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</div><div class="line">  <span class="keyword">if</span> (l &gt;= r) &#123;</div><div class="line">    <span class="keyword">if</span> (cv == k) &#123; <span class="keyword">return</span> l; &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> rlt = query(l, mid, tree[tl].ls, tree[tr].ls, k);</div><div class="line">    <span class="keyword">if</span> (<span class="number">0</span> == rlt) &#123;</div><div class="line">      rlt = query(mid + <span class="number">1</span>, r, tree[tl].rs, tree[tr].rs, k);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> rlt;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">//freopen("data.in", "r", stdin);</span></div><div class="line">  <span class="comment">//freopen("data.out", "w", stdout);</span></div><div class="line">  <span class="keyword">int</span> t;</div><div class="line">  <span class="keyword">for</span> (scaf(t); t--;) &#123;</div><div class="line">    <span class="keyword">int</span> n, g;</div><div class="line">    scaf(n);</div><div class="line">    init(n);</div><div class="line">    troot[<span class="number">0</span>] = build(<span class="number">1</span>, n);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</div><div class="line">      scaf(g);</div><div class="line">      troot[i] = modify(<span class="number">1</span>, n, g + <span class="number">1</span>, troot[i - <span class="number">1</span>]);</div><div class="line">    &#125;</div><div class="line">    scaf(g);</div><div class="line">    <span class="keyword">int</span> l, r, k;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g; ++i) &#123;</div><div class="line">      scaf(l); scaf(r); scaf(k);</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, query(<span class="number">1</span>, n, troot[l], troot[r + <span class="number">1</span>], k) - <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2017/06/14/rsyslogUpgrade/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/02/24/HanoiFactory/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2017/04/18/hr-wk31-6/" data-title="Nominating Group Leaders[HR]" data-url="http://tsfissure.com/2017/04/18/hr-wk31-6/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-04-18 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 20) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "60%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</body>
+   </html>

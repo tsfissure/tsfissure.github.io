@@ -1,0 +1,289 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Cpp+swig=&gt;py|lua | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Cpp+swig=&gt;py|lua"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Cpp+swig=&gt;py|lua</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>把cpp打包给其他语言用的方式有很多。这两天写了个给py和lua用。 记录一下。</p>
+<a id="more"></a>
+<h2 id="swig"><a href="#swig" class="headerlink" title="swig"></a>swig</h2><hr>
+<p>swig算是一个第三方SDK。把cpp打包成库把接口暴露给其他语言使用。可以到<a href="http://www.swig.org/download.html" target="_blank" rel="external">官网下载</a>。后面几个版本似乎没有现成的exe了。我懒得再编。下载了swigwin2.0.9的。<br>他的优势在于简便，步骤简单，而且你可以只管写C++。不用在意其他语言。比如我要打包给python使用，如果使用其他工具，你会在写的过程中不限次乃至PyObject，extern之类的东西，但这个不需要。</p>
+<ul>
+<li>安装<br>我下的2.0.9，自带一个exe.所以我直接把解压路径添加到path就ok了。如果你用了后面的版本，你得需要按照<a href="http://www.swig.org/Doc3.0/Windows.html#Windows_swig_exe" target="_blank" rel="external">官网</a>介绍那样撸一波生成exe.</li>
+</ul>
+<h2 id="打包到python和lua"><a href="#打包到python和lua" class="headerlink" title="打包到python和lua"></a>打包到python和lua</h2><h4 id="cpp-code"><a href="#cpp-code" class="headerlink" title="cpp code"></a>cpp code</h4><p>topy.h<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* File Name: topy.h */</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Topy</span>&#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">say</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">convert</span><span class="params">(<span class="keyword">int</span> k)</span></span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>topy.cpp<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* File Name: topy.cpp */</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"topy.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">void</span> Topy::say()&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"hello swig..."</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Topy::convert(<span class="keyword">int</span> k)&#123;</div><div class="line">    <span class="keyword">return</span> k + <span class="number">100</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="To-Python"><a href="#To-Python" class="headerlink" title="To Python"></a>To Python</h3><hr>
+<p>打包给ython用我觉得是最简单的。swig简直就是给python量身打造,不过也不是了完美的，因为打包后得两个文件一起使用，如果用其他SDK,可以只有一个PYD文件</p>
+<p>1, 编写topy.i<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/* File Name: topy.i */</div><div class="line"></div><div class="line">%module topy</div><div class="line">%&#123;</div><div class="line"><span class="comment">#include "topy.h"</span></div><div class="line">%&#125;</div><div class="line"></div><div class="line">%include <span class="string">"topy.h"</span></div></pre></td></tr></table></figure></p>
+<p>2,  打开命令行<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; swig -c++ -python topy.i</div></pre></td></tr></table></figure></p>
+<p>这时候会新生成两个文件: <code>topy.py</code>,<code>topy_wrap.cxx</code><br>PS: 如果是C。不是C++。可以去掉<code>-c++</code></p>
+<p>3, 编写setup<br>利用python的distutils打包</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"><span class="comment"># File Name: setup.py</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> distutils.core <span class="keyword">import</span> setup</div><div class="line"><span class="keyword">from</span> distutils.extension <span class="keyword">import</span> Extension</div><div class="line"></div><div class="line">setup(</div><div class="line">        name = <span class="string">"ToPython"</span>,</div><div class="line">        ext_modules=[</div><div class="line">                Extension(<span class="string">"_topy"</span>, [<span class="string">"topy_wrap.cxx"</span>, <span class="string">"topy.cpp"</span>])</div><div class="line">            ]</div><div class="line">        )</div></pre></td></tr></table></figure>
+<p>PS: Extension那里名字必须是前面生成的xx.py的名字前面加下划线<code>_xx</code>.后面把需要用到的cpp和前面生成的cxx文件包含进来</p>
+<p>4, 生成<br>打开命令行生成_topy.pyd<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; python setup.py build_ext --inplace</div></pre></td></tr></table></figure></p>
+<p>PS: 关于这里的参数，网上有很多资料我使用的build_ext –inplace生成在当前目录<br>PPS: 不要用install。这个会把生成的两个文件安装到python的site-packages下面去</p>
+<p>5, 把topy.py 和_topy.pyd两份文件放一块就可正常使用了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> topy</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = topy.Topy()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.say()</div><div class="line">hello swig...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.convert(<span class="number">23</span>)</div><div class="line"><span class="number">123</span></div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>有天我服务器重装了一下.把生成好的py和pyd拷贝过去使用。发现找不到模块，开始以为是python出了问题，试了各种方式换了版本，都发现还是不行，有点方。后来忘了在哪里搜到电脑缺msvcpXX.dll会有各种异常，于是把我电脑上的msvcp120.dll,msvcr120.dll拷贝过去。成功执行…吓坏了。有点疑问，生成pyd.为什么和这俩库有关系.报错是找不到module…</p>
+<h3 id="To-Lua"><a href="#To-Lua" class="headerlink" title="To Lua"></a>To Lua</h3><hr>
+<p>懒得再写新代码了。就用刚才的topy.h,topy.cpp吧<br>1，命令行<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; swig -c++ -lua topy.i</div></pre></td></tr></table></figure></p>
+<p>这里只会生成一个topy_wrap.cxx文件</p>
+<p>2, 用vs创建空工程<br>创建新的空工程<br>把你编写的所有.h和.cpp还有刚才生成的cxx文件加进来<br>修改项目属性为生成dll.c/c++附加包含目录为$luaroot$\include.链接输入的附加库目录$luaroot$\lib;附加依赖项$luaroot$\lua51.lib<br>其中$luaroot$表示lua安装目录</p>
+<p>3，编译生成<br>点生成。可生成&lt;项目名称&gt;.dll<br>修改名为topy.dll即可使用</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2017/01/06/pymssql/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/11/05/Urban-Development-cc/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/12/15/cppswig/" data-title="Cpp+swig=>py|lua" data-url="http://tsfissure.com/2016/12/15/cppswig/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-12-15 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/cpp/">cpp<span>2</span></a></li> <li><a href="/tags/py/">py<span>4</span></a></li> <li><a href="/tags/lua/">lua<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>

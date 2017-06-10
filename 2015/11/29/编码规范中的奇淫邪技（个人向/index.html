@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>编码规范中的奇淫邪技(个人向 | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="编码规范中的奇淫邪技(个人向"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 编码规范中的奇淫邪技(个人向</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><a name="pre">前言</a></h3><p><a href="">上一篇</a>讲了我在工作中遇到的”问题”，不应该触碰的禁忌.所以这篇文章准备记录一下我在工作中..算是得出的结论吧，总之就是在工作中我认为这些做法会有各种”好处”，比如代码量少，易阅读，易添加(功能)等.</p>
+<p>如果有不同意见或发现我的错误想法，欢迎下面评论指正.</p>
+<a id="more"></a>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#pre">前言</a></li>
+<li><a href="#multi">先乘后除</a></li>
+<li><a href="#function">函数指针</a></li>
+<li><a href="#enum">懒得写枚举</a></li>
+</ul>
+<h2 id="先乘后除"><a href="#先乘后除" class="headerlink" title="先乘后除"></a><a name="multi">先乘后除</a></h2><p>正如上一篇中提到的”英雄事件”，修改了几次，浪费了不必要的时间，所以在那时候我们也规定了，如果在乘法不爆<code>long long</code>的情况下一律先乘后除，不要使用浮点数，这样不仅在效率上能够得到好的效率，也避免了浮点数带来的各种意外.这是为什么呢？因为,假设有一公式D=A/B*C，结果向下取整，再假设A=20,B=30,C=10，D=A/B*C=20.0/30*10=6.666667向下取整为6..我们令E=A*C=200那么利用先乘后除就是D=A*C/B=E/B=200/30=6(计算机中整除无小数)，结果是一样的，但在此没有用浮点数，效率得到了微妙的提升.假设是向上取整，原式D=20.0/30*10=6.66667=7..换成先乘后除就需要改一下公式成为:D=E/B+(E%B!=0)=200/30+(200%30!=0)=6+true=7，加后面那个尾巴是为了在不整除的情况下结果加1，保证是向上取整这里也避免了浮点数的使用，结果并没有误差.所以在工作中我一般是不会会浮点数的除非非用不可.</p>
+<h2 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a><a name="function">函数指针</a></h2><p>这虽然是在工程特别特别常用的东西.但对于在学校的时候没这样写过的我来说，在写完一个又一个的时候，是无比的兴奋的，我觉得我用得越来越妙.<code>C++</code>中有一个名叫<code>std::function&lt;t&gt;</code>的东西.就是函数指针，函数指针的妙用，除了回调什么的，我最常用的大概就是用来省代码省事吧.举个最近的例子.<br><br>上周花了一周做了市场模块.市场物品各类目前只有两种，但以后会变多，比如做活动会增加商品等.在商品界面，有八个格子，每个格子一种商品，我在多个地方需要判断是哪种物品：<br>  1, 初始时显示物品图片以及数量等简单信息<br>  2, 点击图片时显示详细信息，是在弹出一个新界面弹出显示.<br>在我现在头脑还比较清晰，对代码还有印象的时候，你每添加一种商品的时候，我会记得我需要写一个新商品的详细信息界面，写一个读取简单数据的函数并在点1所在的地方去加一个<code>case</code>,在点击的地方加一个<code>case</code>,如果在游戏上线后，说要做活动，加几个新商品卖，我依然记得另个新商品的详细信息界面，写个简单数据读取函数。但我可能只记得要开始显示的时候要加个<code>case</code>，就不一定记得点击的地方要加个<code>case</code>了.所以在运行测试之后我才会发现还要在点击的时候加个<code>case</code>才能保证弹出来详细界面，太麻烦，而且这里只有2个地方要加，要是以后多个地方要加，那岂不是得好多次而且能测试完全才能补齐.为了避免这种不必要的浪费时间，和无限加长的冗余代码(无止尽的<code>case</code>),函数指针就锋芒显露了,我把读取简单信息的函数，存在一个数组里，详细信息界面的创建函数存在一个数组里，然后在一个统一的函数中维护他们，在使用的时候直接就是<code>if(apkFunc[TypeOfProduct]!=nullptr) apkFunc[TypeOfProduct(parameters)</code>就可以了，只需要一两行代码，代码量减少了，而且在加新商品进来的时候只需要在那个统一的函数中去维护这些函数指针即可，这样也不会忘记某个地方没更新.<br>这在只有两个地方的时候体现可能不太明显，但想象一下如果有十个八个地方需要<code>case</code>，是不是就可以省去一大堆麻烦了.<br>不过这也并不是绝对优美的，因为这样导致了可读性变得差了一些，想象一下别人看你代码的时候，可能知道你在某个地方的意图是读取简单信息，但想要跟下去看读取信息函数的内部实现，根本没法跟啊，得去那个统一的函数里找到他想要看的那个函数的函数名.然后才能跟.</p>
+<h2 id="无限new制"><a href="#无限new制" class="headerlink" title="无限new制"></a><a name="new">无限new制</a></h2><p>这个技巧没啥技术含量，或者说根本算不上是技巧.</p>
+<ul>
+<li>一个游戏必然是伴随着动画的，每个动画都需要去创建，每执行一次都要去<code>new</code>一次。这样显然是不太能接受的，我们应该把重复执行的动画，只<code>new</code>一次，存起来，一直用，无限<code>new</code>的代码是非常可怕的，特别是小内存.</li>
+<li>在有的界面，需要一直刷新，比如说我项目中的造兵界面，为了使进度条显得是慢慢移动的，所以用了每一帧都去刷新一下界面，这里就出现了比如对<code>Text</code>的<code>setString</code>，每一帧去<code>set</code>一次，而在每次<code>set</code>的时候为了方便都是<code>StringUtils::format(&quot;%d&quot;,iNumber)</code>这个函数的实现是先<code>malloc</code>了100k内存，然后<code>sprintf</code>进去，这样看起来比较方便也好理解，但实际上非常可怕的，无限的<code>new</code>100k内存，虽然都会释放掉，这里有个可选方案是，不要在堆上申请，改成在栈上申请内存，定义临时局部<code>char</code>数组，避免了这样的担心.<br>所以避免无限<code>new</code>的方案，一是申请一次存起来复用，二是改成栈上申请，效率又高又可靠.</li>
+</ul>
+<h2 id="懒得写枚举"><a href="#懒得写枚举" class="headerlink" title=" 懒得写枚举"></a><a name="enum"> 懒得写枚举</a></h2><p>写装备系统的时候有个操作是脱装备，穿装备.两种状态，我当时想着就用个<code>bool</code>值0和1表示穿和脱好了.后来再去看的时候发现，并不能立刻反应过来0和1分别代表啥.准备写个注释在旁边，突然回忆起什么来，然后改成了用<code>int</code>来表示脱和穿，但不是只有0和1两个状态，而是变成了<code>+</code>和<code>-</code>两个状态.我用<code>int</code>接收参数，传入<code>&#39;+&#39;</code>或者<code>&#39;-&#39;</code>这样一来，又省略了枚举，又能清楚的表达脱和穿两种状态.当时觉得我太机智了以前都没这样用过.其实是因为我回忆起，我以前看磊哥(一同事)的代码发现他有类似的用法，在战斗的时候要传入一个参数表示攻打方和被打方看见他传入参数是<code>&#39;A&#39;</code>和<code>&#39;B&#39;</code>，觉得这样太机智，一眼就能看出结果又不用写个枚举.<br>为什么不用<code>char</code>呢，一是因为<code>int</code>的范围要广些，可以容纳三四个字母，假设要表示你和我，我可以传入<code>&#39;YOU&#39;</code>和<code>&#39;ME&#39;</code>. 二是因为，在我的认知中，一直是少量，处理<code>int</code>比处理<code>char</code>要高效些.</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/12/04/cocos2d-x带光标的输入框TextField/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/11/24/编码规范中的禁忌（个人向/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/11/29/编码规范中的奇淫邪技（个人向/" data-title="编码规范中的奇淫邪技(个人向" data-url="http://tsfissure.com/2015/11/29/编码规范中的奇淫邪技（个人向/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2015-11-29 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/技巧/">技巧<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>

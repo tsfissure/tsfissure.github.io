@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>卿学姐与基本法[UESTC] | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="卿学姐与基本法[UESTC]"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 卿学姐与基本法[UESTC]</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h3 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a><a href="http://acm.uestc.edu.cn/#/problem/show/1325" target="_blank" rel="external">题目链接</a></h3><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><ul>
+<li>有区间$[1…N](1\leq N \leq 1e8)$, $Q(1\leq Q \leq 1e5)$次操作，初始全部为false每次操作为:<br>1, 区间$[l,r]$设置为true<br>2, 询问区间$[l,r]$还有多少个false</li>
+</ul>
+<a id="more"></a>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
+<li>离散 &amp; 线段树</li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>我们把询问离散化，建立线段树，节点存区间内还剩多少个false,记为$sum$</li>
+<li>令$f(l,r)=fp_r-fp_l+1$表示真实区间的大小,$fp$表示离散化时p对应的真实数</li>
+<li>更新的时候如果某个节点的两个子节点均被标记过(全部被染色)，那么这个节点也肯定全被染色,也就是说不会存在左节点被染了，右节点也被染了，中间还有些点没染,节点的剩余数为总数量减去已被染色的数量$sum=f(l,r)-(f(l,mid)-sum_{left})-(f(mid+1,r)-sum_{right})$</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ULL;</div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> mod = <span class="number">100000007</span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> maxN = <span class="number">3e5</span> + <span class="number">10</span>;</div><div class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;PII;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> lazy[maxN &lt;&lt; <span class="number">2</span>];</div><div class="line"><span class="keyword">int</span>  sum[maxN &lt;&lt; <span class="number">2</span>];</div><div class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;hsMap;</div><div class="line"><span class="keyword">int</span> ql[maxN], qr[maxN], qt[maxN]; <span class="comment">//l,r,type</span></div><div class="line"><span class="keyword">int</span> fp[maxN];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">compute</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> fp[r] - fp[l] + <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  lazy[v] = <span class="literal">false</span>;</div><div class="line">  sum[v] = compute(l, r);</div><div class="line">  <span class="keyword">if</span> (l &gt;= r) &#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">  build(l, mid, v &lt;&lt; <span class="number">1</span>);</div><div class="line">  build(mid + <span class="number">1</span>, r, v &lt;&lt; <span class="number">1</span> | <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">pushUp</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  lazy[v] = lazy[v &lt;&lt; <span class="number">1</span>] &amp;&amp; lazy[v &lt;&lt; <span class="number">1</span> | <span class="number">1</span>];</div><div class="line">  <span class="keyword">if</span> (lazy[v &lt;&lt; <span class="number">1</span>] &amp;&amp; lazy[v &lt;&lt; <span class="number">1</span> | <span class="number">1</span>]) &#123;</div><div class="line">    sum[v] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">  sum[v] = compute(l, r) - (compute(l, mid) - sum[v &lt;&lt; <span class="number">1</span>]) - (compute(mid + <span class="number">1</span>, r) - sum[v &lt;&lt; <span class="number">1</span> | <span class="number">1</span>]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (l &gt;= x &amp;&amp; r &lt;= y) &#123;</div><div class="line">    lazy[v] = <span class="literal">true</span>;</div><div class="line">    sum[v] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (lazy[v]) <span class="keyword">return</span>;</div><div class="line">  <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">  <span class="keyword">if</span> (x &lt;= mid) update(l, mid, x, y, v &lt;&lt; <span class="number">1</span>);</div><div class="line">  <span class="keyword">if</span> (mid &lt; y) update(mid + <span class="number">1</span>, r, x, y, v &lt;&lt; <span class="number">1</span> | <span class="number">1</span>);</div><div class="line">  pushUp(l, r, v);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (l &gt;= x &amp;&amp; r &lt;= y) &#123;</div><div class="line">    <span class="keyword">return</span> sum[v];</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (lazy[v]) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">  <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</div><div class="line">  <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">  <span class="keyword">if</span> (x &lt;= mid) result = query(l, mid, x, y, v &lt;&lt; <span class="number">1</span>);</div><div class="line">  <span class="keyword">if</span> (mid &lt; y) result += query(mid + <span class="number">1</span>, r, x, y, v &lt;&lt; <span class="number">1</span> | <span class="number">1</span>);</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> n, q;</div><div class="line">  hsMap.clear();</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;q);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; ++i) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, qt + i, ql + i, qr + i);</div><div class="line">    <span class="keyword">if</span> (ql[i] - <span class="number">1</span>) hsMap[ql[i] - <span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">    hsMap[ql[i]] = <span class="number">1</span>;</div><div class="line">    hsMap[ql[i] + <span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span> (qr[i] - <span class="number">1</span>) hsMap[qr[i] - <span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">    hsMap[qr[i]] = <span class="number">1</span>;</div><div class="line">    hsMap[qr[i] + <span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> pos = <span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span> (<span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;::iterator iter = hsMap.begin(); iter != hsMap.end(); ++iter) &#123;</div><div class="line">    iter-&gt;second = ++pos;</div><div class="line">    fp[pos] = iter-&gt;first;</div><div class="line">  &#125;</div><div class="line">  build(<span class="number">1</span>, pos, <span class="number">1</span>);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; ++i) &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="number">1</span> == qt[i]) update(<span class="number">1</span>, pos, hsMap[ql[i]], hsMap[qr[i]], <span class="number">1</span>);</div><div class="line">    <span class="keyword">if</span> (<span class="number">2</span> == qt[i]) <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, query(<span class="number">1</span>, pos, hsMap[ql[i]], hsMap[qr[i]], <span class="number">1</span>));</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/05/10/bug集锦/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/04/10/游戏中的角色名字长度/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/04/24/卿学姐与基本法/" data-title="卿学姐与基本法[UESTC]" data-url="http://tsfissure.com/2016/04/24/卿学姐与基本法/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-04-24 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 20) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "60%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</body>
+   </html>

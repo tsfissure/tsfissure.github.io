@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Snacks[HDU5692] | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Snacks[HDU5692]"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Snacks[HDU5692]</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a><a href="http://acm.hdu.edu.cn/showproblem.php?pid=5692" target="_blank" rel="external">题目链接</a></h2><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>给一$N$节点棵树，根节点为0,每个节点有权值$A_i$每次操作为以下二者之一:</p>
+<ul>
+<li>给定节点X，求根节点到X和其子树中的某个点上权值和，最大是多大</li>
+<li>修改节点X的值为Y</li>
+</ul>
+<a id="more"></a>
+<h3 id="吐槽"><a href="#吐槽" class="headerlink" title="吐槽"></a>吐槽</h3><p>这是2016百度之星初赛第一场的C题，守题人大坑比啊，题目提示说要加栈，也把加栈代码在题目中给了出来，于是大多参赛的人应该都是为了方便直接复制了这行代码，我也是。结果就是，不断的RE(STACK_OVERFLOW),检查了代码好多遍，没有发现有问题，于是各种尝试，试到17次的时候我把所有递归都去掉了，发现还是RE，这才反应过来，申请的栈空间还是太大了，改小一点后AC了。然后又发现，，题目描述改过了，提示加栈的那行代码，变小了，mdzz真是坑，改了题面也不说一声，我这类没有怀疑题面的人，就白白浪费了一个多小时，本来可以一A的.</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>题目描述说找一条不重复走的路径必须经过点X,所以也就是到X的它的子树中的某个节点了，所以把树转成线后，只要知道所有节点到根节点的区间，区间维护一下最大值就OK了，因为点X和其子树节点，是一段连续区间,查询的时候直接区间最大值查询即可，修改的时候，也是区间同时变化，用线段树维护一下即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> DEFMID  int mid = l + r &gt;&gt; 1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> L_SON    (v &lt;&lt; 1)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> R_SON    (v &lt;&lt; 1 | 1)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> L_RANGE  l, mid</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> R_RANGE  mid + 1, r</span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LLONG;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod = <span class="number">1e9</span> + <span class="number">7</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EdgeSet</span> &#123;</span></div><div class="line">  <span class="keyword">int</span> to, next;</div><div class="line">&#125; edges[N &lt;&lt; <span class="number">1</span>];</div><div class="line"><span class="keyword">int</span> head[N], etot;</div><div class="line"></div><div class="line"><span class="keyword">int</span> p[N], fp[N], maxr[N]; <span class="comment">//maxr为点u和子树形成区间的右端点</span></div><div class="line">LLONG dis[N], A[N];</div><div class="line"><span class="keyword">int</span> stk[N], parent[N];</div><div class="line"></div><div class="line">LLONG maxToRoot[N &lt;&lt; <span class="number">2</span>];</div><div class="line">LLONG lazy[N &lt;&lt; <span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">addEdge</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  edges[etot].to = v;</div><div class="line">  edges[etot].next = head[u];</div><div class="line">  head[u] = etot++;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">assignPos</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> pos)</span> </span>&#123;</div><div class="line">  p[u] = pos;</div><div class="line">  fp[pos] = u;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">assignParent</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  parent[v] = u;</div><div class="line">  <span class="keyword">if</span> (~u)</div><div class="line">    dis[v] = dis[u] + A[v];</div><div class="line">  <span class="keyword">else</span> dis[v] = A[v];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">getPos</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> toper =  <span class="number">-1</span>;</div><div class="line">  stk[++toper] = u;</div><div class="line">  assignPos(u, <span class="number">1</span>);</div><div class="line">  assignParent(<span class="number">-1</span>, u);</div><div class="line">  <span class="keyword">int</span> pos = <span class="number">1</span>;</div><div class="line">  <span class="keyword">for</span> (; ~toper;) &#123;</div><div class="line">    <span class="keyword">int</span> u = stk[toper];</div><div class="line">    <span class="keyword">int</span> e = head[u];</div><div class="line">    <span class="keyword">if</span> (~e) &#123;</div><div class="line">      <span class="keyword">int</span> v = edges[e].to;</div><div class="line">      <span class="keyword">if</span> (v != parent[u]) &#123;</div><div class="line">        stk[++toper] = v;</div><div class="line">        assignPos(v, ++pos);</div><div class="line">        assignParent(u, v);</div><div class="line">      &#125;</div><div class="line">      head[u] = edges[e].next;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      maxr[u] = pos;</div><div class="line">      --toper;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">pushUp</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  maxToRoot[v] = <span class="built_in">std</span>::max(maxToRoot[L_SON], maxToRoot[R_SON]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  lazy[v] = <span class="number">0</span>;</div><div class="line">  <span class="keyword">if</span> (l &gt;= r) &#123;</div><div class="line">    maxToRoot[v] = dis[fp[l]];</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  DEFMID;</div><div class="line">  build(L_RANGE, L_SON);</div><div class="line">  build(R_RANGE, R_SON);</div><div class="line">  pushUp(v);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">pushDown</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (lazy[v]) &#123;</div><div class="line">    lazy[L_SON] += lazy[v];</div><div class="line">    lazy[R_SON] += lazy[v];</div><div class="line">    maxToRoot[L_SON] -= lazy[v];</div><div class="line">    maxToRoot[R_SON] -= lazy[v];</div><div class="line">    lazy[v] = <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (l &gt;= x &amp;&amp; r &lt;= y) &#123;</div><div class="line">    maxToRoot[v] -= z;</div><div class="line">    lazy[v] += z;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  pushDown(v);</div><div class="line">  DEFMID;</div><div class="line">  <span class="keyword">if</span> (mid &gt;= x) modify(L_RANGE, x, y, z, L_SON);</div><div class="line">  <span class="keyword">if</span> (mid &lt; y) modify(R_RANGE, x, y, z, R_SON);</div><div class="line">  pushUp(v);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> LLONG <span class="title">query</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (l &gt;= x &amp;&amp; r &lt;= y) &#123;</div><div class="line">    <span class="keyword">return</span> maxToRoot[v];</div><div class="line">  &#125;</div><div class="line">  pushDown(v);</div><div class="line">  LLONG rlt = <span class="number">-1L</span>L &lt;&lt; <span class="number">60</span>;</div><div class="line">  DEFMID;</div><div class="line">  <span class="keyword">if</span> (mid &gt;= x) rlt = query(L_RANGE, x, y, L_SON);</div><div class="line">  <span class="keyword">if</span> (mid &lt; y) rlt = <span class="built_in">std</span>::max(rlt, query(R_RANGE, x, y, R_SON));</div><div class="line">  pushUp(v);</div><div class="line">  <span class="keyword">return</span> rlt;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> n, q;</div><div class="line">  <span class="keyword">int</span> u, v, w;</div><div class="line">  <span class="keyword">int</span> t, tt = <span class="number">0</span>;</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;t);</div><div class="line">  <span class="keyword">for</span> (; t--;) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Case #%d:\n"</span>, ++tt);</div><div class="line">    <span class="keyword">int</span> q;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;q);</div><div class="line">    <span class="built_in">memset</span>(head, <span class="number">-1</span>, n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">    etot = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</div><div class="line">      <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;u, &amp;v);</div><div class="line">      addEdge(u, v);</div><div class="line">      addEdge(v, u);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</div><div class="line">      <span class="built_in">scanf</span>(<span class="string">"%I64d"</span>, A + i);</div><div class="line">    getPos(<span class="number">0</span>);</div><div class="line">    build(<span class="number">1</span>, n, <span class="number">1</span>);</div><div class="line">    <span class="keyword">int</span> oper = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (; q--;) &#123;</div><div class="line">      <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;oper);</div><div class="line">      <span class="keyword">if</span> (<span class="number">1</span> == oper) &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;u);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%I64d\n"</span>, query(<span class="number">1</span>, n, p[u], maxr[u], <span class="number">1</span>));</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;u, &amp;v);</div><div class="line">        modify(<span class="number">1</span>, n, p[u], maxr[u], A[u] - v, <span class="number">1</span>);</div><div class="line">        A[u] = v;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h3><p>为了避免再次这种情况发生，我决定温习一遍用非递归的树形转线形，参赛的时候想写，但感觉不太稳，万一debug半天，不划算，现在在复习一遍，下次应该没问题了吧。</p>
+<p>非递归的原理就是，用栈来维护模拟递归，对于一个点u，和它相连的节点有 $v_1,v_2,v_3…v_k$,我们每次只加入一个点，加进配重，然后进行下次循环，如果k个点加完了，就说明点u的子树处理完了，弹出点u.</p>
+<p>PS:这样的代码，边只能遍历一次，如果后面还需要遍历边，记得要把head数组先备份.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">getPos</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123; <span class="comment">//根节点u</span></div><div class="line">  <span class="keyword">int</span> toper =  <span class="number">-1</span>; </div><div class="line">  stk[++toper] = u;  <span class="comment">//这三行是准备根节点的信息</span></div><div class="line">  assignPos(u, <span class="number">1</span>);</div><div class="line">  assignParent(<span class="number">-1</span>, u);</div><div class="line">  <span class="keyword">int</span> pos = <span class="number">1</span>;</div><div class="line">  <span class="keyword">for</span> (; ~toper;) &#123;</div><div class="line">    <span class="keyword">int</span> u = stk[toper];</div><div class="line">    <span class="keyword">int</span> e = head[u];</div><div class="line">    <span class="keyword">if</span> (~e) &#123;</div><div class="line">      <span class="keyword">int</span> v = edges[e].to;  <span class="comment">//下一个连接的点v</span></div><div class="line">      <span class="keyword">if</span> (v != parent[u]) &#123;</div><div class="line">        stk[++toper] = v; <span class="comment">//如果是新节点，加进栈</span></div><div class="line">        assignPos(v, ++pos);</div><div class="line">        assignParent(u, v);</div><div class="line">      &#125;</div><div class="line">      head[u] = edges[e].next;  <span class="comment">//记得把head指向下一条边方便下次读取</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      maxr[u] = pos;  <span class="comment">//如果读完了，说明点u的子树，就是这个区间了.</span></div><div class="line">      --toper;  <span class="comment">//读完了就弹出一个点</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/08/18/cpp-py/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/05/10/bug集锦/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/05/21/Snacks/" data-title="Snacks[HDU5692]" data-url="http://tsfissure.com/2016/05/21/Snacks/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-05-21 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 20) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "60%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</body>
+   </html>

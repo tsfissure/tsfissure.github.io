@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Cpp Python通信初探 | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Cpp Python通信初探"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Cpp Python通信初探</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;游戏服务端比较流行的组合是<code>cpp+lua</code>，似乎是从云风dalao的skynet开始的，不过相对来说我更喜欢<code>python</code>，而且现在工作也用的是<code>python</code>，所以毫无疑问，用<code>python</code>必须的.作为将来拥有自己的服务端计划的一环，先初探一下他们之间的通信</p>
+<h2 id="工具环境"><a href="#工具环境" class="headerlink" title="工具环境"></a>工具环境</h2><ul>
+<li>visual studio 2013</li>
+<li>Python 2.7.12</li>
+</ul>
+<a id="more"></a>
+<hr>
+<h3 id="创建工程添加依赖"><a href="#创建工程添加依赖" class="headerlink" title="创建工程添加依赖"></a>创建工程添加依赖</h3><ul>
+<li><p>如果需要在Debug环境下运行程序，得先对Python做一些处理</p>
+<ul>
+<li>把<code>%PythonRoot%/libs/Python27.dll</code> 拷贝一份改名为<code>Python27_d.dll</code>，为Debug所用</li>
+<li>修改<code>%PythonRoot%/Libs/Pyconfig.h</code>,搜索<code>#define Py_DEBUG</code>注释掉此行,因为Debug模式下有些宏在<code>python27.dll</code>里面是没有的</li>
+</ul>
+</li>
+<li><p>用vs创建一个空程，进入工程属性</p>
+<ul>
+<li>如果你的<code>python</code>是32位，无视这步; 点击配置管理器,活动解决方案平台/新建 x64平台，用于跑64位<code>python</code>:<br><img src="/img/cpx64pf.png" alt="build x64 platform"></li>
+<li>CC++/常规/附加包含目录 -&gt; ‘%PythonRoot%/include/‘ 把python安装目录下的include包含进去<br><img src="/img/cppyinc.png" alt="add py include"></li>
+<li>链接器/常规/附加库目录 -&gt; <code>%PythonRoot%/libs/</code> 把python安装目录下的libs库包含进去<br><img src="/img/cplink.png" alt="link pylibs"></li>
+<li>创建main.cpp</li>
+</ul>
+</li>
+</ul>
+<h3 id="入门代码"><a href="#入门代码" class="headerlink" title="入门代码"></a>入门代码</h3><p>先写一份first.py代码，我放在与main.cpp相同目录下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"><span class="comment"># first.py</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'tsfissure'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(a, b)</span>:</span></div><div class="line">    <span class="keyword">return</span> a + b</div></pre></td></tr></table></figure></p>
+<p>main.cpp中如下代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Python.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">strFunc</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">auto</span> pyModule = PyImport_ImportModule(<span class="string">"first"</span>);  <span class="comment">//PyObject* //import first</span></div><div class="line">  <span class="keyword">if</span> (pyModule) &#123; <span class="comment">//import success</span></div><div class="line">    <span class="keyword">auto</span> pyFunc = PyObject_GetAttrString(pyModule, <span class="string">"getName"</span>); <span class="comment">//PyObject* // first.getName()</span></div><div class="line">    <span class="keyword">if</span> (pyFunc) &#123;</div><div class="line">      <span class="keyword">auto</span> v = PyObject_CallObject(pyFunc, <span class="literal">nullptr</span>);  <span class="comment">//PyObject //call function</span></div><div class="line">      <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; PyString_AsString(v) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">      Py_DECREF(pyFunc);<span class="comment">//free pointer</span></div><div class="line">    &#125;</div><div class="line">    Py_DECREF(pyModule);  <span class="comment">//free pointer</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">intFunc</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">auto</span> pyModule = PyImport_ImportModule(<span class="string">"first"</span>);</div><div class="line">  <span class="keyword">if</span> (pyModule) &#123;</div><div class="line">    <span class="keyword">auto</span> pyFunc = PyObject_GetAttrString(pyModule, <span class="string">"add"</span>);</div><div class="line">    <span class="keyword">auto</span> pyParam = PyTuple_New(<span class="number">2</span>);  <span class="comment">//PyObject* //param of first.add</span></div><div class="line">    <span class="keyword">if</span> (pyFunc &amp;&amp; pyParam) &#123;</div><div class="line">      PyTuple_SetItem(pyParam, <span class="number">0</span>, PyLong_FromLongLong(<span class="number">123456789123L</span>L)); <span class="comment">//set tuple value, pylong from long long</span></div><div class="line">      PyTuple_SetItem(pyParam, <span class="number">1</span>, PyInt_FromSize_t(<span class="number">1</span>)); </div><div class="line">      <span class="keyword">auto</span> v = PyObject_CallObject(pyFunc, pyParam);</div><div class="line">      <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; PyLong_AsLongLong(v) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">      Py_DECREF(pyFunc);</div><div class="line">      Py_DECREF(pyParam);</div><div class="line">    &#125;</div><div class="line">    Py_DECREF(pyModule);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>**argv)</span> </span>&#123;</div><div class="line">  Py_Initialize();</div><div class="line">  <span class="keyword">if</span> (!Py_IsInitialized()) &#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Python Initialize error"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    PyRun_SimpleString(<span class="string">"print 'Hello Cpp Python!'"</span>); <span class="comment">// run a simple commond</span></div><div class="line">    strFunc();</div><div class="line">    intFunc();</div><div class="line">    Py_Finalize();</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">std</span>::system(<span class="string">"pause"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>结果是：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Hello Cpp Python!</div><div class="line">123456789124</div><div class="line">请按任意键继续. . .</div></pre></td></tr></table></figure></p>
+<p>在first.py中定义了两个函数，一个是传入字符串返回一个字符串，一个是传入ab返回a+b。<br>main.cpp中先Py_initialize()如果成功了，先调用一个简单串，相当于在py环境下输入这句话，然后分别调用了py中的两个函数</p>
+<p>有了注释我想应该很容易看懂了</p>
+<ul>
+<li>包含<code>Python.h</code>头文件</li>
+<li>从<code>Py_Initialze()</code>开始，到<code>Py_Finalized()</code>结束</li>
+<li>一切对象都是<code>PyObject*</code>   //我用了<code>auto</code></li>
+<li>空参数时传<code>null</code></li>
+</ul>
+<p>over.入门还是挺简单的.</p>
+<h2 id="python-调用cpp"><a href="#python-调用cpp" class="headerlink" title="python 调用cpp"></a>python 调用cpp</h2><p>转<a href="/2016/12/15/cppswig/">swig</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/08/22/maxgrid-cc/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/05/21/Snacks/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/08/18/cpp-py/" data-title="Cpp Python通信初探" data-url="http://tsfissure.com/2016/08/18/cpp-py/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-08-18 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/cpp/">cpp<span>2</span></a></li> <li><a href="/tags/py/">py<span>4</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>
