@@ -1,6 +1,6 @@
 ---
 title: CentOS上Rsyslog升级
-date: 2017-06-014 20:09:57
+date: 2017-06-14 20:09:57
 tags: rsyslog
 ---
 
