@@ -108,6 +108,27 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2017-06-19 </div>
+			<div class="article-title"><a href="/2017/06/19/mysql-dynamic-table/" >Mysql事件event定时分表</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>对于日志这种作用的数据库，如果历史记录不太重要，可以选择定期删除日志，比如现在在玩儿的阴阳师的突破记录只保留两天数据，近两年很火的棋牌类游戏，回放也只支持两三天的.但如果数据比较重要，比如玩家充值记录，消耗记录等，那就必须要考虑数据量大了后的影响了，比如查询插入操作太慢带来的负面影响之类的.一种优化方式就是分表备份.现在手上的活就有这需求，所以我决定按月分表.<br>开始想着在mysql收到数据时进行check一下是否需要分表，但是这数据量，担心扛不住而且也做了无数的无用功，最重要的是，rsyslog调用存储过程，并!不能在里面有诸如<code>create table</code>之类的语句，会返回给你一个<code>XXXXcan&#39;t return a result set in the given context</code>错误.<br>于是想着在mysql自身上去找解决方案，最后决定用event来解决这个问题。<br>
+	
+	</div>
+  <a type="button" href="/2017/06/19/mysql-dynamic-table/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2017-06-16 </div>
 			<div class="article-title"><a href="/2017/06/16/rsys-mysql/" >Rsyslog远程日志落实到mysql</a></div>						
 		</h3>
@@ -309,32 +330,6 @@
 </div>
 
 		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2016-10-18 </div>
-			<div class="article-title"><a href="/2016/10/18/dontusefloat/" >可怕浮点の玩家少了一个金币</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p>对浮点数抱有恐惧感，大概是刚<del>出生</del>学会用浮点数的时候。<br>一个原因是因为效率，浮点数乘除法都比整数慢，所以在能用整数的情况下，我会尽量用整数，不过这原因似乎也不是很重要，因为有了第二个原因:误差，</p>
-<blockquote>
-<p>人类终于回想起那一天，被浮点数误差所支配的恐惧</p>
-</blockquote>
-<p>在学校的时候，就很怕ZJU的题目，因为每次总会有不愿看见的浮点数题，总会要求误差不超过0.000001(1e-6)，然后你可能在哪个地方先除再乘了，在哪个地方多了个不必要的运算，这误差就出来了。</p>
-<p>工作虽然也一直担心屏幕坐标取得不对啊，运算太慢导致太卡啊啥的，不过也一直没有出现什么问题。然而今天，玩家少了一个金币</p>
-	
-	</div>
-  <a type="button" href="/2016/10/18/dontusefloat/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -385,31 +380,31 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/lua/">lua<span>2</span></a></li>
+			<li><a href="/tags/杂谈/">杂谈<span>3</span></a></li>
+		
+			<li><a href="/tags/禁忌/">禁忌<span>2</span></a></li>
+		
+			<li><a href="/tags/mysql/">mysql<span>2</span></a></li>
 		
 			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
 		
-			<li><a href="/tags/py/">py<span>4</span></a></li>
+			<li><a href="/tags/技巧/">技巧<span>1</span></a></li>
 		
-			<li><a href="/tags/Vim/">Vim<span>1</span></a></li>
-		
-			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
-		
-			<li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
-		
-			<li><a href="/tags/杂谈/">杂谈<span>3</span></a></li>
+			<li><a href="/tags/lua/">lua<span>2</span></a></li>
 		
 			<li><a href="/tags/GameServer/">GameServer<span>0</span></a></li>
 		
 			<li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
 		
-			<li><a href="/tags/技巧/">技巧<span>1</span></a></li>
-		
-			<li><a href="/tags/禁忌/">禁忌<span>2</span></a></li>
+			<li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
 		
 			<li><a href="/tags/Bug/">Bug<span>1</span></a></li>
 		
 			<li><a href="/tags/cocos2d-x/">cocos2d-x<span>2</span></a></li>
+		
+			<li><a href="/tags/Vim/">Vim<span>1</span></a></li>
+		
+			<li><a href="/tags/py/">py<span>4</span></a></li>
 		
 		 
 		</ul>
@@ -421,6 +416,10 @@
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/06/19/mysql-dynamic-table/" ><i class="fa fa-file-o"></i>Mysql事件event定时分表</a>
+      </li>
     
       <li>
         <a href="/2017/06/16/rsys-mysql/" ><i class="fa fa-file-o"></i>Rsyslog远程日志落实到mysql</a>
@@ -436,10 +435,6 @@
     
       <li>
         <a href="/2017/02/24/HanoiFactory/" ><i class="fa fa-file-o"></i>HanoiFactory[CF]</a>
-      </li>
-    
-      <li>
-        <a href="/2017/02/15/lowlua/" ><i class="fa fa-file-o"></i>Lua黑(?)</a>
       </li>
     
   </ul>
