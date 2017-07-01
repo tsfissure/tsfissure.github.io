@@ -5,9 +5,9 @@ tags: mysql
 ---
 
 
-对于日志这种作用的数据库，如果历史记录不太重要，可以选择定期删除日志，比如现在在玩儿的阴阳师的突破记录只保留两天数据，近两年很火的棋牌类游戏，回放也只支持两三天的.但如果数据比较重要，比如玩家充值记录，消耗记录等，那就必须要考虑数据量大了后的影响了，比如查询插入操作太慢带来的负面影响之类的.一种优化方式就是分表备份.现在手上的活就有这需求，所以我决定按月分表.
-开始想着在mysql收到数据时进行check一下是否需要分表，但是这数据量，担心扛不住而且也做了无数的无用功，最重要的是，rsyslog调用存储过程，并!不能在里面有诸如`create table`之类的语句，会返回给你一个`XXXXcan't return a result set in the given context`错误.
-于是想着在mysql自身上去找解决方案，最后决定用event来解决这个问题。
+对于日志这种作用的数据库，如果历史记录不太重要，可以选择定期删除日志，比如现在在玩儿的阴阳师的突破记录只保留两天数据，近两年很火的棋牌类游戏，回放也只支持两三天的.但如果数据比较重要，比如玩家充值记录，消耗记录等，那就必须要考虑数据量大了后的影响了，比如查询插入操作太慢带来的负面影响之类的.一种优化方式就是分表备份.现在手上的活就有这需求，经过思考我决定按月分表.
+
+一说到自动创建分表，想到的方法就是，用event来解决这个问题。
 <!-- more -->
 
 ---
@@ -39,7 +39,7 @@ select @v1,@v2,@v3,@v4
 这是部分对时间的有趣处理结果.
 可以看出，@v4是我们想要的结果.
 
-预备知识2:动态创建表
+预备知识2:<span id="ctd">动态创建表</span>
 ```sql
 set @q = concat('create table if not exists `recharge', 1706,'` (id int not null)');
 prepare stmt from @q;
@@ -76,7 +76,34 @@ do call p_tst_check_table()
 ```
 这时候就可以每天调用一次存储过程了，可以用`show events`查询语句查看已建立的事件.
 
+附上一个官方文档中完整event的属性:
+```sql
+CREATE
+    [DEFINER = { user | CURRENT_USER }]
+    EVENT
+    [IF NOT EXISTS]
+    event_name
+    ON SCHEDULE schedule
+    [ON COMPLETION [NOT] PRESERVE]
+    [ENABLE | DISABLE | DISABLE ON SLAVE]
+    [COMMENT 'comment']
+    DO event_body;
+
+schedule:
+    AT timestamp [+ INTERVAL interval] ...
+  | EVERY interval
+    [STARTS timestamp [+ INTERVAL interval] ...]
+    [ENDS timestamp [+ INTERVAL interval] ...]
+
+interval:
+    quantity {YEAR | QUARTER | MONTH | DAY | HOUR | MINUTE |
+              WEEK | SECOND | YEAR_MONTH | DAY_HOUR | DAY_MINUTE |
+              DAY_SECOND | HOUR_MINUTE | HOUR_SECOND | MINUTE_SECOND}
+```
+
 ### 题外
-这只是个例子，细心一点会发现创建表备份不应该利用当前时间的年月，应该备份的是上个月的。
+这只是个例子，细心一点会发现:
+创建表备份不应该利用当前时间的年月，应该备份的是上个月的。
 事件的触发是在创建的那个点的每一天，不是每一天的0点。
-这些就在具体的逻辑中去细化吧.
+事件触发频率控制到一个月一次，又可以节约好几次调用了.
+这些就在具体的逻辑中去细化吧:).
