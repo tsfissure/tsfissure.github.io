@@ -113,7 +113,7 @@
 	  <p>在v8版本的rsyslog中，把远程接收到的日志落实到mysql的一种合理配置方式及流程.<br><a id="more"></a></p>
 <p>在rsyslog和mysql都安装完成的情况下。</p>
 <hr>
-<h3 id="建立相应数据库和专用账号"><a href="#建立相应数据库和专用账号" class="headerlink" title="建立相应数据库和专用账号"></a>建立相应数据库和专用账号</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> mysql -uroot -p</span></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> create database TSRsyslog;</span></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> grant all on TSRsyslog.* to `rsyslog`@`localhost` identified by <span class="string">'123456'</span>;</span></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> flush privileges;</span></div></pre></td></tr></table></figure>
+<h3 id="建立相应数据库和专用账号"><a href="#建立相应数据库和专用账号" class="headerlink" title="建立相应数据库和专用账号"></a>建立相应数据库和专用账号</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># mysql -uroot -p</div><div class="line">mysql&gt; create database TSRsyslog;</div><div class="line">mysql&gt; grant all on TSRsyslog.* to `rsyslog`@`localhost` identified by &apos;123456&apos;;</div><div class="line">mysql&gt; flush privileges;</div></pre></td></tr></table></figure>
 <p>第一行代码是进入到mysql环境下.然后依次建立数据库TSRsyslog，创建账号<code>rsyslog</code>@<code>localhost</code>密码123456同时开放TSRsyslog的所有权限</p>
 <hr>
 <h3 id="创建日志处理所用的存储过程"><a href="#创建日志处理所用的存储过程" class="headerlink" title="创建日志处理所用的存储过程"></a>创建日志处理所用的存储过程</h3><p>例子:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CREATE DEFINER=`rsyslog`@`localhost` PROCEDURE `p_log_factory`(IN `ptime` timestamp,IN `pmsg` text)</div><div class="line">BEGIN</div><div class="line">    declare vlogtype <span class="keyword">int</span> <span class="keyword">default</span> <span class="number">0</span>;</div><div class="line">    <span class="function">insert <span class="title">systemevents</span><span class="params">(rtime, message)</span> <span class="title">values</span><span class="params">(ptime, pmsg)</span></span>;</div><div class="line">END</div></pre></td></tr></table></figure></p>
@@ -128,7 +128,7 @@
 <hr>
 <h3 id="重启服务"><a href="#重启服务" class="headerlink" title="重启服务"></a>重启服务</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># service rsyslog restart</span></div></pre></td></tr></table></figure>
 <hr>
-<h3 id="随意"><a href="#随意" class="headerlink" title="随意"></a>随意</h3><p>经过如上操作，就可以完成从远程接收日志(514端口udp数据)，存到本机mysql通过TSRsyslog.p_log_factory存储过程.<br>配置尽量独立，不要应用的都去主配置里面修改，难于维护。<br>对数据库的处理语句尽量使用存储过程，因为我们可以在rsyslog运行的过程中修改存储过程，如果写在配置中了，每一次修改，都需要重启rsyslog服务。这是非常不友好的。</p>
+<h3 id="随意"><a href="#随意" class="headerlink" title="随意"></a>随意</h3><p>经过如上操作，就可以完成从远程接收日志(514端口udp数据)，存到本机mysql通过TSRsyslog.p_log_factory存储过程.<br>配置尽量独立，不要应用的都去主配置里面修改，难于维护。<br>对数据库的处理语句尽量使用存储过程，因为我们可以在rsyslog运行的过程中修改存储过程，如果写在配置中了，每一次修改，都需要重启rsyslog服务。这是非常不友好的。<br>如果有问题，可以在关闭rsyslog后，用<code>rsyslogd -dn</code>启动调试环境，这时候可以在终端debug</p>
 	  
 	</div>
 
@@ -210,7 +210,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/mysql/">mysql<span>2</span></a></li> <li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
+  <li><a href="/tags/mysql/">mysql<span>3</span></a></li> <li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
     </ul>
 	</div>
 		

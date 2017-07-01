@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Auto-Append the MySQL MERGE ENGINEs UNION | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Auto-Append the MySQL MERGE ENGINEs UNION"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Auto-Append the MySQL MERGE ENGINEs UNION</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="如何在创建分表时自动维护主表的union"><a href="#如何在创建分表时自动维护主表的union" class="headerlink" title="如何在创建分表时自动维护主表的union??"></a>如何在创建分表时自动维护主表的union??</h2><hr>
+<h3 id="ENGINE-MERGE"><a href="#ENGINE-MERGE" class="headerlink" title="ENGINE=MERGE"></a>ENGINE=MERGE</h3><p>MySQL提供一种分表机制是创建一个engine=merge的主表.子表为engine=MyISAM,然后主表属性union=(…)来<em>告诉</em>它子表有哪些.<br>例如<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t1(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">int</span></div><div class="line">)<span class="keyword">engine</span> = MyISAM;</div><div class="line"></div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t2 <span class="keyword">like</span> t1;</div><div class="line"></div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_merge(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">int</span></div><div class="line">)<span class="keyword">engine</span> = <span class="keyword">merge</span> insert_method=<span class="keyword">last</span> <span class="keyword">union</span>=(t1,t2);</div></pre></td></tr></table></figure></p>
+<p>这样就能创建一个名为t_merge的主表，t1,t2为子表.在子表插入数据的时候，直接查询主表可得到子表的数据.<br>其他属性网上的资料非常多，官网也介绍得特别好.<br>重点是这个<strong>union=(xxx)</strong>,每创建一个子表就需要去维护一次.</p>
+<a id="more"></a>
+<p>据<a href="https://dev.mysql.com/doc/refman/5.7/en/merge-storage-engine.html" target="_blank" rel="external">官方文档</a>介绍：</p>
+<blockquote>
+<p>To remap a MERGE table to a different collection of MyISAM tables, you can use one of the following methods:</p>
+<ul>
+<li><p>DROP the MERGE table and re-create it.</p>
+</li>
+<li><p>Use ALTER TABLE tbl_name UNION=(…) to change the list of underlying tables.</p>
+</li>
+</ul>
+<p>It is also possible to use ALTER TABLE … UNION=() (that is, with an empty UNION clause) to remove all of the underlying tables. However, in this case, the table is effectively empty and inserts fail because there is no underlying table to take new rows. Such a table might be useful as a template for creating new MERGE tables with CREATE TABLE … LIKE.</p>
+</blockquote>
+<p>也就是说，你在创建子表的时候。1，删除主表重新创建;2，alter table table_name union=(sub_table_list);两个办法可以修改主表的union.<br>可是啊。我们的表那么多(<del>其实也就二三十张</del>)，创建子表那么频繁(<del>一个月一次</del>)。肯定不能是人工维护的.</p>
+<p>google了半天，似乎也没有搜到啥方便的方案.<br>于是自己想了个比较笨拙的方法.</p>
+<h3 id="一个暂时可用的方案"><a href="#一个暂时可用的方案" class="headerlink" title="一个暂时可用的方案."></a>一个暂时可用的方案.</h3><p>对于需要建分表的数据.表名我们一般都会按照时间来定，比如我有一个玩家注册表<code>register</code>(<span style="background:#333333"><del>玩家注册你也要分表?你一个月要注册几亿玩家吗?</del></span>),那么我的子表名一般会定义成<code>register1706</code>，<code>register1707</code>表示2017年6月和7月份注册的玩家.这里好像在<a href="/2017/06/19/mysql-dynamic-table#ctd">前面</a>说过</p>
+<p>所以我的方案可以概括成:</p>
+<ol>
+<li>把后缀存起来</li>
+<li>创建表时，把后缀连接成字符串</li>
+<li>动态执行sql语句.</li>
+</ol>
+<h4 id="创建一个存后缀的表"><a href="#创建一个存后缀的表" class="headerlink" title="创建一个存后缀的表."></a>创建一个存后缀的表.</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">drop</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">exists</span> table_suffix;</div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_suffix(</div><div class="line">    suffix <span class="built_in">smallint</span> <span class="keyword">not</span> <span class="literal">null</span> <span class="keyword">unique</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>存的数据是这样的:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select * from table_suffix;</div><div class="line">+--------+</div><div class="line">| suffix |</div><div class="line">+--------+</div><div class="line">| 1706   |</div><div class="line">| 1707   |</div><div class="line">| 1708   |</div><div class="line">+--------+</div><div class="line">3 rows in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<h4 id="把后缀连接成字符串"><a href="#把后缀连接成字符串" class="headerlink" title="把后缀连接成字符串"></a>把后缀连接成字符串</h4><p>先看一下正常修改语句的形式是<code>alter table register union=(register1706,register1707,register1708)</code>。我们需要组成的字符串,就是括号里面的那句.<br>为了通用,我们可以创建一个function，传入主表名，返回字符串.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> <span class="string">`f_concat_union`</span>(ftablename <span class="built_in">text</span>) <span class="keyword">RETURNS</span> <span class="built_in">text</span> <span class="keyword">CHARSET</span> utf8</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line">    <span class="keyword">declare</span> vrlt <span class="built_in">text</span> <span class="keyword">default</span> <span class="string">''</span>;</div><div class="line">    <span class="keyword">declare</span> vdone <span class="built_in">int</span> <span class="keyword">default</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">declare</span> vsfx <span class="built_in">int</span> <span class="keyword">default</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">declare</span> vcur <span class="keyword">cursor</span> <span class="keyword">for</span> <span class="keyword">select</span> suffix <span class="keyword">from</span> table_suffix;</div><div class="line">    <span class="keyword">declare</span> continue <span class="keyword">handler</span> <span class="keyword">for</span> <span class="keyword">sqlstate</span> <span class="string">'02000'</span> <span class="keyword">set</span> vdone = <span class="number">1</span>;</div><div class="line">    </div><div class="line">    open vcur;</div><div class="line">    while vdone=0 <span class="keyword">do</span></div><div class="line">        <span class="keyword">fetch</span> vcur <span class="keyword">into</span> vsfx;</div><div class="line">        if 0 = vdone then</div><div class="line">            if vrlt != '' then</div><div class="line">                <span class="keyword">set</span> vrlt=<span class="keyword">concat</span>(vrlt,<span class="string">','</span>);</div><div class="line">            <span class="keyword">end</span> <span class="keyword">if</span>;</div><div class="line">            <span class="keyword">set</span> vrlt=<span class="keyword">concat</span>(vrlt,ftablename,vsfx);</div><div class="line">        <span class="keyword">end</span> <span class="keyword">if</span>;</div><div class="line">    <span class="keyword">end</span> <span class="keyword">while</span>;</div><div class="line">    close vcur;</div><div class="line">    </div><div class="line">    RETURN vrlt;</div><div class="line"><span class="keyword">END</span></div></pre></td></tr></table></figure>
+<p>打开游标循环后缀，然后组成字符串返回。例子如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select f_concat_union('payment');</div><div class="line">+-------------------------------------+</div><div class="line">| f_concat_union('payment')           |</div><div class="line">+-------------------------------------+</div><div class="line">| payment1706,payment1707,payment1708 |</div><div class="line">+-------------------------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h4 id="动态执行sql语句"><a href="#动态执行sql语句" class="headerlink" title="动态执行sql语句"></a>动态执行sql语句</h4><p>已经拿到括号内的字符串了，所以这时候我们直接像前面说动态创建表那样执行sql语句就ok了.<br>因为是在创建子表的时候要执行的，所以创建存储过程来完成一整套流程.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> <span class="string">`p_backup_table`</span>(<span class="keyword">IN</span> <span class="string">`ptablename`</span> <span class="built_in">text</span>,<span class="keyword">IN</span> <span class="string">`pyearmonth`</span> <span class="built_in">smallint</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line">    <span class="keyword">set</span> @q0 = <span class="keyword">concat</span>(<span class="string">'drop table if exists '</span>,ptablename,pyearmonth);</div><div class="line">    <span class="keyword">set</span> @q1 = <span class="keyword">concat</span>(<span class="string">'create table '</span>,ptablename,pyearmonth,<span class="string">' like '</span>,ptablename);</div><div class="line">    <span class="keyword">set</span> @q2 = <span class="keyword">concat</span>(<span class="string">'alter table '</span>,ptablename,pyearmonth,<span class="string">' engine=MyISAM'</span>);</div><div class="line">    <span class="keyword">set</span> @concat_union = f_concat_union(ptablename);</div><div class="line">    <span class="keyword">set</span> @q3 = <span class="keyword">concat</span>(<span class="string">'alter table '</span>, ptablename,<span class="string">' union=('</span>,@concat_union,<span class="string">')'</span>);</div><div class="line">    </div><div class="line">    <span class="keyword">prepare</span> stmt <span class="keyword">from</span> @q0;</div><div class="line">    <span class="keyword">execute</span> stmt;</div><div class="line">    <span class="keyword">drop</span> <span class="keyword">prepare</span> stmt;</div><div class="line"></div><div class="line">    <span class="keyword">prepare</span> stmt <span class="keyword">from</span> @q1;</div><div class="line">    <span class="keyword">execute</span> stmt;</div><div class="line">    <span class="keyword">drop</span> <span class="keyword">prepare</span> stmt;</div><div class="line"></div><div class="line">    <span class="keyword">prepare</span> stmt <span class="keyword">from</span> @q2;</div><div class="line">    <span class="keyword">execute</span> stmt;</div><div class="line">    <span class="keyword">drop</span> <span class="keyword">prepare</span> stmt;</div><div class="line">    </div><div class="line">    <span class="keyword">prepare</span> stmt <span class="keyword">from</span> @q3;</div><div class="line">    <span class="keyword">execute</span> stmt;</div><div class="line">    <span class="keyword">drop</span> <span class="keyword">prepare</span> stmt;</div><div class="line"><span class="keyword">END</span></div></pre></td></tr></table></figure>
+<p>传入的参数是主表名和年月(后缀)<br>整个流程是，删表如果存在，创建表结构和主表一样，修改子表engine=MyISAM，修改主表的union.关键的是最后一步，不再需要我们人工维护主表的union.<br>PS：记得在调用前要先把后缀insert到table_suffix表中.</p>
+<p>刚才payment建表的结果和payment表的DDL:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show tables;</div><div class="line">+----------------------+</div><div class="line">| Tables_in_testmerge  |</div><div class="line">+----------------------+</div><div class="line">| payment              |</div><div class="line">| payment1706          |</div><div class="line">| payment1707          |</div><div class="line">| payment1708          |</div><div class="line">| table_suffix         |</div><div class="line">+----------------------+</div><div class="line">5 rows in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; show create table payment;</div><div class="line">+---------+---------------------------------------------------------------------------------------------------+</div><div class="line">| Table   | Create Table                                                                                      |</div><div class="line">+---------+---------------------------------------------------------------------------------------------------+</div><div class="line">| payment | CREATE TABLE `payment` (</div><div class="line">  `id` int(11) NOT NULL,</div><div class="line">  `val` int(11) NOT NULL</div><div class="line">) ENGINE=MRG_MyISAM DEFAULT CHARSET=utf8 INSERT_METHOD=LAST UNION=(`payment1706`,`payment1707`,`payment1708`) |</div><div class="line">+---------+---------------------------------------------------------------------------------------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>可以看出主表payment的union已正常更新.</p>
+<hr>
+<h3 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h3><p>到此动态建表的操作已经差不多了，还剩下一个问题就是在正常运营后，我们会删表(数据太多了当然得删啦)，这时候还要来维护一下这个union(不然表结构就GG了)。思路大概就是在f_concat_union里面入手了，判断一下.在删除表的时候不要直接删(本来就不应该这样),走删表正常流程，再加个上面的@q3就差不多了.后面再说吧:)</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/06/19/mysql-dynamic-table/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2017/06/20/append-union/" data-title="Auto-Append the MySQL MERGE ENGINEs UNION" data-url="http://tsfissure.com/2017/06/20/append-union/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-20 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/mysql/">mysql<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>

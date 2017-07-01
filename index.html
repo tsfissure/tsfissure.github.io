@@ -108,6 +108,29 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2017-06-20 </div>
+			<div class="article-title"><a href="/2017/06/20/append-union/" >Auto-Append the MySQL MERGE ENGINEs UNION</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="如何在创建分表时自动维护主表的union"><a href="#如何在创建分表时自动维护主表的union" class="headerlink" title="如何在创建分表时自动维护主表的union??"></a>如何在创建分表时自动维护主表的union??</h2><hr>
+<h3 id="ENGINE-MERGE"><a href="#ENGINE-MERGE" class="headerlink" title="ENGINE=MERGE"></a>ENGINE=MERGE</h3><p>MySQL提供一种分表机制是创建一个engine=merge的主表.子表为engine=MyISAM,然后主表属性union=(…)来<em>告诉</em>它子表有哪些.<br>例如<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t1(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">int</span></div><div class="line">)<span class="keyword">engine</span> = MyISAM;</div><div class="line"></div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t2 <span class="keyword">like</span> t1;</div><div class="line"></div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_merge(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">int</span></div><div class="line">)<span class="keyword">engine</span> = <span class="keyword">merge</span> insert_method=<span class="keyword">last</span> <span class="keyword">union</span>=(t1,t2);</div></pre></td></tr></table></figure></p>
+<p>这样就能创建一个名为t_merge的主表，t1,t2为子表.在子表插入数据的时候，直接查询主表可得到子表的数据.<br>其他属性网上的资料非常多，官网也介绍得特别好.<br>重点是这个<strong>union=(xxx)</strong>,每创建一个子表就需要去维护一次.</p>
+	
+	</div>
+  <a type="button" href="/2017/06/20/append-union/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2017-06-19 </div>
 			<div class="article-title"><a href="/2017/06/19/mysql-dynamic-table/" >Mysql事件event定时分表</a></div>						
 		</h3>
@@ -118,7 +141,8 @@
   <div class="row">
 	
 	
-		<p>对于日志这种作用的数据库，如果历史记录不太重要，可以选择定期删除日志，比如现在在玩儿的阴阳师的突破记录只保留两天数据，近两年很火的棋牌类游戏，回放也只支持两三天的.但如果数据比较重要，比如玩家充值记录，消耗记录等，那就必须要考虑数据量大了后的影响了，比如查询插入操作太慢带来的负面影响之类的.一种优化方式就是分表备份.现在手上的活就有这需求，所以我决定按月分表.<br>开始想着在mysql收到数据时进行check一下是否需要分表，但是这数据量，担心扛不住而且也做了无数的无用功，最重要的是，rsyslog调用存储过程，并!不能在里面有诸如<code>create table</code>之类的语句，会返回给你一个<code>XXXXcan&#39;t return a result set in the given context</code>错误.<br>于是想着在mysql自身上去找解决方案，最后决定用event来解决这个问题。<br>
+		<p>对于日志这种作用的数据库，如果历史记录不太重要，可以选择定期删除日志，比如现在在玩儿的阴阳师的突破记录只保留两天数据，近两年很火的棋牌类游戏，回放也只支持两三天的.但如果数据比较重要，比如玩家充值记录，消耗记录等，那就必须要考虑数据量大了后的影响了，比如查询插入操作太慢带来的负面影响之类的.一种优化方式就是分表备份.现在手上的活就有这需求，经过思考我决定按月分表.</p>
+<p>一说到自动创建分表，想到的方法就是，用event来解决这个问题。<br>
 	
 	</div>
   <a type="button" href="/2017/06/19/mysql-dynamic-table/#more" class="btn btn-default more">阅读此文</a>
@@ -309,27 +333,6 @@
 </div>
 
 		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2016-10-30 </div>
-			<div class="article-title"><a href="/2016/10/30/decorator/" >&lt;Del&gt;装饰器继承&lt;/del&gt;__call__</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h2><p>最近在计划着用Django写个web出来玩玩儿，在用户验证这里用装饰器简单粗暴，细分有登录验证，管理员验证。发现两个装饰器的代码仅有一丢丢的差别，第一反应是就这样吧，第二反应是如果过两天我加了验证怎么办，比如VIP,SVIP,特定渠道验证等，感觉也只有一行代码的差别，于是我想着把这抽象出来，搜了搜发现<code>class</code>有一个有趣的东西<code>__call__</code>.</p>
-	
-	</div>
-  <a type="button" href="/2016/10/30/decorator/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -380,31 +383,29 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
+			<li><a href="/tags/Vim/">Vim<span>1</span></a></li>
+		
+			<li><a href="/tags/Bug/">Bug<span>1</span></a></li>
+		
+			<li><a href="/tags/lua/">lua<span>2</span></a></li>
+		
+			<li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
+		
+			<li><a href="/tags/技巧/">技巧<span>1</span></a></li>
+		
 			<li><a href="/tags/杂谈/">杂谈<span>3</span></a></li>
 		
 			<li><a href="/tags/禁忌/">禁忌<span>2</span></a></li>
 		
-			<li><a href="/tags/mysql/">mysql<span>2</span></a></li>
+			<li><a href="/tags/cocos2d-x/">cocos2d-x<span>2</span></a></li>
 		
 			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
 		
-			<li><a href="/tags/技巧/">技巧<span>1</span></a></li>
-		
-			<li><a href="/tags/lua/">lua<span>2</span></a></li>
-		
-			<li><a href="/tags/GameServer/">GameServer<span>0</span></a></li>
-		
 			<li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
 		
-			<li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
-		
-			<li><a href="/tags/Bug/">Bug<span>1</span></a></li>
-		
-			<li><a href="/tags/cocos2d-x/">cocos2d-x<span>2</span></a></li>
-		
-			<li><a href="/tags/Vim/">Vim<span>1</span></a></li>
-		
 			<li><a href="/tags/py/">py<span>4</span></a></li>
+		
+			<li><a href="/tags/mysql/">mysql<span>3</span></a></li>
 		
 		 
 		</ul>
@@ -416,6 +417,10 @@
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/06/20/append-union/" ><i class="fa fa-file-o"></i>Auto-Append the MySQL MERGE...</a>
+      </li>
     
       <li>
         <a href="/2017/06/19/mysql-dynamic-table/" ><i class="fa fa-file-o"></i>Mysql事件event定时分表</a>
@@ -431,10 +436,6 @@
     
       <li>
         <a href="/2017/04/18/hr-wk31-6/" ><i class="fa fa-file-o"></i>Nominating Group Leaders[HR]</a>
-      </li>
-    
-      <li>
-        <a href="/2017/02/24/HanoiFactory/" ><i class="fa fa-file-o"></i>HanoiFactory[CF]</a>
       </li>
     
   </ul>
