@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>噩梦般的半周 | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="噩梦般的半周"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 噩梦般的半周</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>本来是想回忆一下这两周的情况.很惨，记忆也有些不清了，上周的比较深刻，就这周本来也让人很苦恼呢.懒得写了.</p>
+<h2 id="7-14-周五"><a href="#7-14-周五" class="headerlink" title="7.14(周五)"></a>7.14(周五)</h2><p>前些天他们在大改协议相关的东西，我这边下午程序crash了一次,跪在莫名奇妙的地方,我以为是他们没提完的原因,晚上他们提交，我更新代码，顺利跑N久(约一小时吧).于是提交svn.并部署到内网外开启压测.内心念了一句，明天不用加班工作完美完成(<del>flag已高高立起</del>)…</p>
+<a id="more"></a>
+<h2 id="7-17-周一"><a href="#7-17-周一" class="headerlink" title="7.17(周一)"></a>7.17(周一)</h2><p>早上一来同事A便说，周六加班的时候crash了，很惨，把你后台的配置关了也不行.压测只500人，开一会儿便报错提示栈不够用.其中某个地方还有死循环.<br>于是我开始review代码和重现(其实这时候我还很觉得不是我这边的问题，这版本改动那么大，我这边逻辑很简单，不会用到太多栈)。<br>我开着50到200人的机器人压测，发现挺顺利的!没错，一直不crash，这就让我很迷了.我要求同事A把工程rebuild再试试.神奇的事情是，他那边随便跑一下，就报错说栈不够用，而且不够的点，非常随机。<br>没错我们遇到了传说中的<strong>random error</strong>.<br>他也查得很累，到了下午两边都没啥进展.脸色略显难看…<br>晚上大约五点过，我把我的思路告诉他，我们一起review我的代码.逻辑很清晰，无递归，变量不足以导致崩溃.找了一会儿，发现我的确有个地方没有delete.在向rsyslog发数据的时候，一直在new，在线程里面发送完应该delete但我忘了.<br>晚上吃完饭，我把bug修掉，再跑，我这边仍然很顺利.于是提交svn，他更新，跑了一会儿，好像也没崩溃.于是下班时部署内外网开启压测。开心地下了班..<br>(yeah~,这时候天真的我以为万事大吉了)</p>
+<h2 id="7-18-周二"><a href="#7-18-周二" class="headerlink" title="7.18(周二)"></a>7.18(周二)</h2><p>早上一来同事A说，崩了，依然random error.我的内心开始惊恐，但我心里是认为问题出了他们那里.我昨天那bug已经修了，他们改了那么多.<br>日子如同周一一样，我这边依然跑得很顺利，他那边依然re。<br>两边脸色比昨天更难看。<br>于是几个server端的同事都开始review自己的功能.一起讨论.终无果。<br>晚上的时候找到了那个死循环的地方,是另一个同事写的商店还是啥的，随机物品，表没配好导致的.加了保护解决了死循环.<br>但这时候的问题表现仍然是：开着50个机器人跑，没一会儿就会random error.这时候不是栈不够了，而是各种指针为空.各种访问无权限。<br>直到晚上不开心的下了班….</p>
+<p>问题出现了两天，server感觉已经不稳定了近一周，心里压力突然大了起来，因为他们都认为问题出在我这里.我不怕被开除，但怕同事认为是个坑。</p>
+<h2 id="7-19-周三"><a href="#7-19-周三" class="headerlink" title="7.19(周三)"></a>7.19(周三)</h2><p>问题拖了两天，安排的活也停滞了两天没做，同事A决定使用终极手段：版本回退。</p>
+<p>首先把版本回退到我提交之前.结果是没崩溃，死循环在.<del>我的内心已经开始哭泣</del><br>然后一个版本一个版本回，然后把和上一个版本对比的修改注释掉(这样改动比较好控，不是一次回退多个版本)。<br>直到下午四五点，回退10多个版本后。<br>不崩溃了。<br>发现注释的代码是(去掉了多余的部分，贴了关键部分)：<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">void ScriptLua::OnItemChange(OGSLib::DomainPlay* player, OGSLib::SubItem* item, OGSLib::ItemChangeType optype, int src)</div><div class="line">&#123;</div><div class="line">trueint result_catch = <span class="number">0</span>;</div><div class="line">trueconst <span class="built_in">char</span>* <span class="function"><span class="keyword">function</span> = "<span class="title">gm.rsys.OnOpItem</span>";</span></div><div class="line">true<span class="title">try</span></div><div class="line">true&#123;</div><div class="line">truetrue<span class="title">luaL_findfunction</span><span class="params">(m_l, LUA_GLOBALSINDEX, function)</span>;</div><div class="line">truetrue<span class="keyword">if</span> (lua_isfunction(m_l, <span class="number">-1</span>))</div><div class="line">truetrue&#123;</div><div class="line">truetruetrue...</div><div class="line">truetruetrueresult_catch = report(m_l, lua_pcall(m_l, <span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="function"><span class="keyword">function</span>)</span>;</div><div class="line">truetrue&#125;</div><div class="line">truetruelua_pop(m_l, <span class="number">1</span>);</div><div class="line">true&#125;</div><div class="line">truecatch (...)</div><div class="line">true&#123;</div><div class="line">true&#125;</div><div class="line">true...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>他们的内心惊喜无比，我的内心崩溃无比。问题还是出在了我这里，原来我是个坑。<br>可是，这代码有啥问题？<br>我说这函数是为了在玩家的道具变化时记到rsyslog。在C++层调用lua函数在那边组包发送.调用的代码是在前面复制的模板改的.逻辑没问题，参数也没问题。要是report出错我也是能catch到的.<br>几个人看着这段代码大眼瞪小眼。<br>找了前面几个函数对比了一下。<br>发现。有的函数那个lua_pop(m_l,1)，是用else括起来的，有的没有，很是迷，如下：<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (lua_isfunction(m_l, <span class="number">-1</span>))</div><div class="line">&#123;</div><div class="line">true...</div><div class="line">&#125;<span class="keyword">else</span></div><div class="line">&#123;</div><div class="line">truelua_pop(m_l, <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后我把注释取消，加上else.<br>嗯是的没错，没有崩溃…终于定位了问题就出现在这里.</p>
+<p>经过多个函数对比，我们找到规律：C++调用lua的时候，如果有返回值，才需要直接pop，如果没有就要加else.(这是前人写的框架，已离职，只有我们几个自己探索了)</p>
+<p>我们的脸上终于泛起一丝正常的光.</p>
+<p>晚上我请他们吃饭.算作我把他们坑得这么惨的赔偿吧.(<del>嗯不对，应该是我被lua坑得这么惨的代价2333</del>)，嗯当然他们希望来顿大的,可是还要赶着回来修bug呢,大的留着下次吧.</p>
+<h2 id="7-20-周四"><a href="#7-20-周四" class="headerlink" title="7.20(周四)"></a>7.20(周四)</h2><p>醒来首先想到的是，今天有没有崩溃呢…</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/06/20/append-union/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2017/07/28/terribleweeks/" data-title="噩梦般的半周" data-url="http://tsfissure.com/2017/07/28/terribleweeks/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-07-28 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/lua/">lua<span>3</span></a></li> <li><a href="/tags/杂谈/">杂谈<span>4</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>
