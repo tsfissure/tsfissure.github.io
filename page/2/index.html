@@ -108,6 +108,28 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2017-01-06 </div>
+			<div class="article-title"><a href="/2017/01/06/pymssql/" >Pymssql乱码</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><hr>
+<p>元旦居然没出去玩儿..花了一整天研究pymssql并把数据库之前MYSql更改为SQL Server,迁移真是累哭.然后迁移完发现，unicode传过去不显示或者显示编码过后的字符串.</p>
+	
+	</div>
+  <a type="button" href="/2017/01/06/pymssql/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2016-12-15 </div>
 			<div class="article-title"><a href="/2016/12/15/cppswig/" >Cpp+swig=&gt;py|lua</a></div>						
 		</h3>
@@ -322,32 +344,6 @@
 </div>
 
 		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2016-05-10 </div>
-			<div class="article-title"><a href="/2016/05/10/bug集锦/" >Bugの收钱</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><ul>
-<li>记录一下查了几个月的bug，隐藏深，重现难，修复易</li>
-</ul>
-<h3 id="案件还原"><a href="#案件还原" class="headerlink" title="案件还原"></a>案件还原</h3><ul>
-<li>我现在有装水容器A，容量为5000ml，又有容器B，容量为2000ml，每小时增加100ml，我每点击一次容器B，就把容器B中已有的全部放入A，然后开始收集，如果不能全部放入A，那么能放多少就放多少，剩下的还留在B，然后B继续增涨，这差不多就是背景。<br>bug就是，在你点击B的时候，偶尔有一次只能放部分到A去，实际上A能容纳全部B,真的很难重现，比如这上线一个月，我收了几百次了，一次都没出现，有同事一天就出现两次，而且大家都是在手机上出现的，电脑上跑从来没出现过，本来我都摆着不影响的心态，说随缘了，能找到重现方式就修。</li>
-</ul>
-	
-	</div>
-  <a type="button" href="/2016/05/10/bug集锦/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -398,31 +394,33 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/技巧/">技巧<span>1</span></a></li>
-		
-			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
-		
-			<li><a href="/tags/cocos2d-x/">cocos2d-x<span>2</span></a></li>
-		
-			<li><a href="/tags/mysql/">mysql<span>3</span></a></li>
-		
-			<li><a href="/tags/py/">py<span>4</span></a></li>
-		
-			<li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
+			<li><a href="/tags/py/">py<span>5</span></a></li>
 		
 			<li><a href="/tags/Bug/">Bug<span>1</span></a></li>
-		
-			<li><a href="/tags/lua/">lua<span>3</span></a></li>
-		
-			<li><a href="/tags/Vim/">Vim<span>1</span></a></li>
 		
 			<li><a href="/tags/禁忌/">禁忌<span>2</span></a></li>
 		
 			<li><a href="/tags/杂谈/">杂谈<span>4</span></a></li>
 		
-			<li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
+			<li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
 		
 			<li><a href="/tags/go/">go<span>1</span></a></li>
+		
+			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
+		
+			<li><a href="/tags/excel/">excel<span>1</span></a></li>
+		
+			<li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
+		
+			<li><a href="/tags/cocos2d-x/">cocos2d-x<span>2</span></a></li>
+		
+			<li><a href="/tags/lua/">lua<span>3</span></a></li>
+		
+			<li><a href="/tags/技巧/">技巧<span>1</span></a></li>
+		
+			<li><a href="/tags/Vim/">Vim<span>1</span></a></li>
+		
+			<li><a href="/tags/mysql/">mysql<span>3</span></a></li>
 		
 		 
 		</ul>
@@ -440,6 +438,10 @@
       </li>
     
       <li>
+        <a href="/2018/05/03/py-win32com-dispatch/" ><i class="fa fa-file-o"></i>Py_win32com_dispatch</a>
+      </li>
+    
+      <li>
         <a href="/2017/07/28/terribleweeks/" ><i class="fa fa-file-o"></i>噩梦般的半周</a>
       </li>
     
@@ -449,10 +451,6 @@
     
       <li>
         <a href="/2017/06/19/mysql-dynamic-table/" ><i class="fa fa-file-o"></i>Mysql事件event定时分表</a>
-      </li>
-    
-      <li>
-        <a href="/2017/06/16/rsys-mysql/" ><i class="fa fa-file-o"></i>Rsyslog远程日志落实到mysql</a>
       </li>
     
   </ul>

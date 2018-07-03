@@ -129,6 +129,38 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2018-05-03 </div>
+			<div class="article-title"><a href="/2018/05/03/py-win32com-dispatch/" >Py_win32com_dispatch</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>有个朋友叫帮忙写个脚本,把Excel A,B,C,D,E中的某个sheet，同步到F中。我觉得这很容易，便一口答应了。<br>但试了好几个库比如openpyxl, pandas,xlrd,xlwt啥的，都有两个共同问题</p>
+<ul>
+<li><ol>
+<li>不能把sheet复制到不同的Excel中</li>
+</ol>
+</li>
+<li><ol>
+<li>复制单元格内容时，只能复制值，格式控制不完全,图表啥的，就GG了.</li>
+</ol>
+</li>
+</ul>
+<p>最后发现 win32com.client.Dispatch，异常好用，记录一下。</p>
+	
+	</div>
+  <a type="button" href="/2018/05/03/py-win32com-dispatch/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2017-07-28 </div>
 			<div class="article-title"><a href="/2017/07/28/terribleweeks/" >噩梦般的半周</a></div>						
 		</h3>
@@ -307,28 +339,6 @@
 </div>
 
 		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-01-06 </div>
-			<div class="article-title"><a href="/2017/01/06/pymssql/" >Pymssql乱码</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><hr>
-<p>元旦居然没出去玩儿..花了一整天研究pymssql并把数据库之前MYSql更改为SQL Server,迁移真是累哭.然后迁移完发现，unicode传过去不显示或者显示编码过后的字符串.</p>
-	
-	</div>
-  <a type="button" href="/2017/01/06/pymssql/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -381,29 +391,31 @@
 		
 			<li><a href="/tags/Vim/">Vim<span>1</span></a></li>
 		
-			<li><a href="/tags/禁忌/">禁忌<span>2</span></a></li>
-		
-			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
-		
-			<li><a href="/tags/杂谈/">杂谈<span>4</span></a></li>
-		
-			<li><a href="/tags/Bug/">Bug<span>1</span></a></li>
-		
-			<li><a href="/tags/cocos2d-x/">cocos2d-x<span>2</span></a></li>
-		
-			<li><a href="/tags/lua/">lua<span>3</span></a></li>
-		
-			<li><a href="/tags/go/">go<span>1</span></a></li>
-		
-			<li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
-		
 			<li><a href="/tags/数据结构/">数据结构<span>8</span></a></li>
 		
 			<li><a href="/tags/mysql/">mysql<span>3</span></a></li>
 		
-			<li><a href="/tags/py/">py<span>4</span></a></li>
+			<li><a href="/tags/py/">py<span>5</span></a></li>
+		
+			<li><a href="/tags/lua/">lua<span>3</span></a></li>
 		
 			<li><a href="/tags/技巧/">技巧<span>1</span></a></li>
+		
+			<li><a href="/tags/rsyslog/">rsyslog<span>2</span></a></li>
+		
+			<li><a href="/tags/cocos2d-x/">cocos2d-x<span>2</span></a></li>
+		
+			<li><a href="/tags/杂谈/">杂谈<span>4</span></a></li>
+		
+			<li><a href="/tags/go/">go<span>1</span></a></li>
+		
+			<li><a href="/tags/excel/">excel<span>1</span></a></li>
+		
+			<li><a href="/tags/Bug/">Bug<span>1</span></a></li>
+		
+			<li><a href="/tags/禁忌/">禁忌<span>2</span></a></li>
+		
+			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
 		
 		 
 		</ul>
@@ -421,6 +433,10 @@
       </li>
     
       <li>
+        <a href="/2018/05/03/py-win32com-dispatch/" ><i class="fa fa-file-o"></i>Py_win32com_dispatch</a>
+      </li>
+    
+      <li>
         <a href="/2017/07/28/terribleweeks/" ><i class="fa fa-file-o"></i>噩梦般的半周</a>
       </li>
     
@@ -430,10 +446,6 @@
     
       <li>
         <a href="/2017/06/19/mysql-dynamic-table/" ><i class="fa fa-file-o"></i>Mysql事件event定时分表</a>
-      </li>
-    
-      <li>
-        <a href="/2017/06/16/rsys-mysql/" ><i class="fa fa-file-o"></i>Rsyslog远程日志落实到mysql</a>
       </li>
     
   </ul>
