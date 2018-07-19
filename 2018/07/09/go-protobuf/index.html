@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Go_protobuf | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Go_protobuf"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Go_protobuf</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h3 id="go使用protobuf初接触"><a href="#go使用protobuf初接触" class="headerlink" title="go使用protobuf初接触"></a>go使用protobuf初接触</h3><p>记录一下从零开始在go中使用protobuf通信.</p>
+<a id="more"></a>
+<h2 id="1-下载protoc-exe"><a href="#1-下载protoc-exe" class="headerlink" title="1 下载protoc.exe"></a>1 下载protoc.exe</h2><blockquote>
+<p><a href="https://github.com/google/protobuf/releases" target="_blank" rel="external">https://github.com/google/protobuf/releases</a></p>
+</blockquote>
+<p>我下载的是protoc-xxx-win32.zip,在windows上这个直接包含exe，免去编译。<br>同时把exe拷贝到$GOPATH/bin目录下，因为后面gofaster也在这目录，所以放一起,执行命令时能找到.。把目录加到环境变量中.</p>
+<h2 id="安装protobuf库"><a href="#安装protobuf库" class="headerlink" title="安装protobuf库"></a>安装protobuf库</h2><blockquote>
+<p>go get github.com/golang/protobuf/proto</p>
+</blockquote>
+<p>执行后就会在$GOPATH/pkg/和$GOPATH/src下面有相相应代码和.a库文件</p>
+<h2 id="gogoprotobuf-插件"><a href="#gogoprotobuf-插件" class="headerlink" title="gogoprotobuf 插件"></a>gogoprotobuf 插件</h2><blockquote>
+<p>go get github.com/gogo/protobuf/protoc-gen-gofast</p>
+</blockquote>
+<p>执行后还需要install一下生成一堆exe .我是用的LiteIDE install all的，也比较方便</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>此时随便找个文件夹建个.proto文件即可以<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">syntax = &quot;proto3&quot;;</div><div class="line">package example;</div><div class="line"></div><div class="line"></div><div class="line">message UserInfo&#123;</div><div class="line">    string name = 1;</div><div class="line">    int32 age = 2;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>第一行网上说是必须指定是proto2还是proto3.后面就随意了</p>
+<blockquote>
+<p>protoc –gofast_out=. example.proto</p>
+</blockquote>
+<p>顺利执行的话会生成example.pb.go文件<br>内容太多，就不贴了。</p>
+<p>最后是正式使用时这些.proto文件和.pb.go文件的位置问题,下一节会再来。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>所有基本环境已经搭建完成,接下来正式使用:<br>在$GOPATH/src下面建目录protocol表示协议相关的文件.<br>protocol/proto放*.proto文件,生成的.pb.go文件放在protocol/pbgo/目录下面<br>注意这里.proto文件的package应写为pbgo，与生成的目录名相同.方便后面install和import</p>
+<blockquote>
+<p>src<br> └─protocol<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─pbgo<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─proto</p>
+</blockquote>
+<p>所以需要在src/protocol/目录下建个脚本生成所有.pb.go文件,关键语句为<code>protoc --gofast_out=./../pbgo xxx.proto</code>.批量生成代码如下(bat文件)<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cd %~dp0</div><div class="line">@echo off</div><div class="line"></div><div class="line">for %%i in (proto/*.proto) do (</div><div class="line">    echo %%i</div><div class="line">    protoc -I=proto --gofast_out=pbgo proto/%%i</div><div class="line">)</div><div class="line"></div><div class="line">pause</div></pre></td></tr></table></figure></p>
+<p>这样就会在/protocol/pbgo/目录下生成对应的pb.go文件<br>然后在/protocol/pbgo目录下go install。这样就会生成$GOPATH/pkg/protocol/pbgo.a库文件。(其实这一步也可以写在上面的.bat批处理里面)<br>此时在src的其他项目中我们就可以<code>import &quot;protocol/pbgo&quot;</code>把协议包包含进来使用</p>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>根据上面的操作后，新建客户端和服务端代码通信试试：<br>我实践用例是客户端把今日日期和天气传给服务端。<br>所以proto:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">syntax = &quot;proto3&quot;;</div><div class="line">package pbgo;</div><div class="line"></div><div class="line">message TodayInfo &#123;</div><div class="line">    int32 year = 1;</div><div class="line">    int32 month = 2;</div><div class="line">    int32 day = 3;</div><div class="line">    string weather = 4;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Server.go:<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"fmt"</span></div><div class="line">    <span class="string">"io"</span></div><div class="line">    <span class="string">"net"</span></div><div class="line">    <span class="string">"os"</span></div><div class="line">    <span class="string">"protocol/pbgo"</span></div><div class="line"></div><div class="line">    <span class="string">"github.com/gogo/protobuf/proto"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">onAccept</span><span class="params">(conn net.Conn)</span></span> &#123;</div><div class="line">    <span class="keyword">defer</span> conn.Close()</div><div class="line">    <span class="keyword">var</span> msg []<span class="keyword">byte</span> = <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="number">2048</span>)</div><div class="line">    <span class="keyword">for</span> &#123;</div><div class="line">        n, err := conn.Read(msg)</div><div class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">            <span class="keyword">if</span> err == io.EOF &#123;</div><div class="line">                <span class="keyword">break</span></div><div class="line">            &#125;</div><div class="line">            fmt.Println(<span class="string">"Read Error"</span>, err.Error())</div><div class="line">            <span class="keyword">break</span></div><div class="line">        &#125;</div><div class="line">        data := msg[:n]</div><div class="line">        todayInfo := &amp;pbgo.TodayInfo&#123;&#125;</div><div class="line">        err = proto.Unmarshal(data, todayInfo)</div><div class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">            fmt.Println(<span class="string">"Unmarchal Error"</span>, err.Error())</div><div class="line">            <span class="keyword">break</span></div><div class="line">        &#125;</div><div class="line">        fmt.Printf(<span class="string">"Year[%d] Month[%d] Day[%d] Weather[%s]\n"</span>,</div><div class="line">            todayInfo.GetYear(), todayInfo.GetMonth(),</div><div class="line">            todayInfo.GetDay(), todayInfo.GetWeather())</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    listen, err := net.Listen(<span class="string">"tcp"</span>, <span class="string">":2333"</span>)</div><div class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">        fmt.Println(err.Error())</div><div class="line">        os.Exit(<span class="number">1</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">defer</span> listen.Close()</div><div class="line">    fmt.Println(<span class="string">"Listen Success"</span>)</div><div class="line">    <span class="keyword">for</span> &#123;</div><div class="line">        conn, err := listen.Accept()</div><div class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">            fmt.Println(<span class="string">"Aceept Error:"</span>, err.Error())</div><div class="line">            <span class="keyword">break</span></div><div class="line">        &#125;</div><div class="line">        fmt.Println(<span class="string">"Accept:"</span>, conn.LocalAddr().String(), conn.RemoteAddr().String())</div><div class="line">        <span class="keyword">go</span> onAccept(conn)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Client.go:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"fmt"</span></div><div class="line">    <span class="string">"net"</span></div><div class="line">    <span class="string">"os"</span></div><div class="line">    <span class="string">"protocol/pbgo"</span></div><div class="line">    <span class="string">"sync"</span></div><div class="line">    <span class="string">"time"</span></div><div class="line"></div><div class="line">    <span class="string">"github.com/gogo/protobuf/proto"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">onConnect</span><span class="params">(conn net.Conn, mux *sync.WaitGroup)</span></span> &#123;</div><div class="line">    <span class="keyword">defer</span> mux.Done()</div><div class="line">    <span class="keyword">defer</span> conn.Close()</div><div class="line"></div><div class="line">    todayInfo := &amp;pbgo.TodayInfo&#123;</div><div class="line">        Year:    <span class="number">2018</span>,</div><div class="line">        Month:   <span class="number">7</span>,</div><div class="line">        Day:     <span class="number">9</span>,</div><div class="line">        Weather: <span class="string">"非常热"</span>,</div><div class="line">    &#125;</div><div class="line">    data, err := proto.Marshal(todayInfo)</div><div class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">        fmt.Println(<span class="string">"Send Error:"</span>, err.Error())</div><div class="line">        <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    conn.Write(data)</div><div class="line">    time.Sleep(<span class="number">1</span> * time.Second)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    conn, err := net.Dial(<span class="string">"tcp"</span>, <span class="string">"127.0.0.1:2333"</span>)</div><div class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">        fmt.Println(<span class="string">"Connect Error:"</span>, err.Error())</div><div class="line">        os.Exit(<span class="number">1</span>)</div><div class="line">    &#125;</div><div class="line">    fmt.Println(<span class="string">"Connect Success"</span>)</div><div class="line">    mux := sync.WaitGroup&#123;&#125;</div><div class="line">    mux.Add(<span class="number">1</span>)</div><div class="line">    <span class="keyword">go</span> onConnect(conn, &amp;mux)</div><div class="line">    mux.Wait()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>分别install后，先打开server.exe再打开client.exe<br>server端结果显示如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Listen Success</div><div class="line">Accept: <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">2333</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">56355</span></div><div class="line">Year[<span class="number">2018</span>] Month[<span class="number">7</span>] Day[<span class="number">9</span>] Weather[非常热]</div></pre></td></tr></table></figure></p>
+<p>到此。便可告一段落了.</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/06/29/go-input/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2018/07/09/go-protobuf/" data-title="Go_protobuf" data-url="http://tsfissure.com/2018/07/09/go-protobuf/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-07-09 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/go/">go<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>
