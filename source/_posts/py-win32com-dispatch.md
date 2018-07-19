@@ -7,8 +7,8 @@ tags: [py,excel]
 
 有个朋友叫帮忙写个脚本,把Excel A,B,C,D,E中的某个sheet，同步到F中。我觉得这很容易，便一口答应了。
 但试了好几个库比如openpyxl, pandas,xlrd,xlwt啥的，都有两个共同问题
-- 1. 不能把sheet复制到不同的Excel中
-- 2. 复制单元格内容时，只能复制值，格式控制不完全,图表啥的，就GG了.
+- 不能把sheet复制到不同的Excel中
+- 复制单元格内容时，只能复制值，格式控制不完全,图表啥的，就GG了.
 
 最后发现 win32com.client.Dispatch，异常好用，记录一下。
 
