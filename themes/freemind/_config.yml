@@ -1,0 +1,67 @@
+slogan: "宇宙的另一边，是什么样的呢..."
+
+theme: bootstrap
+inverse: true
+
+menu:
+  - title: 全部
+    url: archives
+    intro: "All the articles."
+    icon: "fa fa-archive"
+  - title: 数据结构
+    url: tags/数据结构/
+    intro: "All the DataStructures."
+    icon: "fa fa-folder"
+  - title: 标签
+    url: tags
+    intro: "All the tags."
+    icon: "fa fa-tags"
+  - title: 关于博主
+    url: about
+    intro: "About me."
+    icon: "fa fa-user"
+
+links:
+  - title: this theme
+    url: https://github.com/wzpan/freemind/
+    intro: "Freemind's Github repository."
+    icon: "fa fa-github"
+  - title: "My Github"
+    url: http://www.github.com/tsfissure
+    intro: "My Github account."
+    icon: "fa fa-github"
+  - title: "My CSDN"
+    url: http://blog.csdn.net/madrishing
+    intro: My csdn blog/about algorithm
+    icon: "fa fa-folder"
+  #- title: "My LinkedIn"
+   # url: http://www.linkedin.com/in/hahack
+    #intro: "My Linkin account."
+    #icon: "fa fa-linkedin"
+
+widgets:
+- search
+- category
+- tagcloud
+- recent_posts  
+- links
+
+rss: 
+fancybox: true
+favicon: img/favicon.ico
+duoshuo_shortname: tsfissure
+
+# Analytics
+google_analytics:
+  enable: false
+  siteid:
+baidu_tongji:
+  enable: false
+  siteid:
+
+# search
+# swiftype_key: ZP2ZSuHgipSZfRyU8uTR
+
+# share widgets
+bdshare: true
+jiathis: false
