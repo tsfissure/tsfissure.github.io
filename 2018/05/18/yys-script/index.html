@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>鸡哥脚步始末 | tsfissure</title>
+  <meta name="author" content="tsfissure">
+  
+  <meta name="description" content="fissure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="鸡哥脚步始末"/>
+  <meta property="og:site_name" content="tsfissure"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/img/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css"> 
+
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">tsfissure</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>全部
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags/数据结构/" title="All the DataStructures.">
+			  <i class="fa fa-folder"></i>数据结构
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于博主
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 鸡哥脚步始末</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="始"><a href="#始" class="headerlink" title="始"></a>始</h2><hr>
+<p>时不时的又会听说阴阳师有人用按键精灵被封号了，用连点器也封号了之类的。本来没啥感觉<del>(毕竟本大佬全身都是肝不需要辅助工具)</del>.<br>在前几天帮朋友写了个脚本copy excel之后，有个寮友说了一句让我写个脚本来给yys砸百鬼刷魂十吧。<br>我突然来了兴致决定试一试，写一个能自动刷魂十，又能避开官方外挂检测的脚本.</p>
+<a id="more"></a>
+<hr>
+<h3 id="大体思路决定"><a href="#大体思路决定" class="headerlink" title="大体思路决定"></a>大体思路决定</h3><ol>
+<li>避开检测到外挂，那必须点击的时间和坐标一定要随机</li>
+<li>要方便启动和关闭，那就得开两条线程一边控制鼠标点击，一边检测键盘事件。</li>
+<li>要尽量方便用户操作，不接受按键精灵那样要先自己手动过一遍再保存成脚本运行。</li>
+</ol>
+<p>控制鼠标和监听键盘都有现成的库(<code>pykeyboard</code> and <code>pymouse</code>)，也比较容易。<br>其中难点在于坐标的获取。只要把第一点解决好，第三点也就可以无视了。<br>为了获取开始战斗的按钮。考虑了几个版本。</p>
+<h4 id="version-1"><a href="#version-1" class="headerlink" title="version.1"></a>version.1</h4><p>在游戏启动后，通过截图方式获取按钮在屏幕左上角算过来的坐标，写到配置文件里面。然后启动脚本。<br>经测试，成功。但是。每次启动都需要填配置不是很操蛋的事情吗，而且除了开始按钮还有接任务按钮等，这些要配置，是会哭的。pass</p>
+<h4 id="version-2"><a href="#version-2" class="headerlink" title="version.2"></a>version.2</h4><p>为了不填配置。我想了另外一个方案：<br>先把开始按钮截图保存下来<code>img1</code>。<br>游戏启动到开始战斗界面，然后启动脚本，脚本启动时截图整个屏幕，然后通过图像查找目标图片(<code>img1</code>)在整个屏幕图片中的坐标。查找不到就告之启动失败。<br>为此我还发现一个网易的开源库<a href="https://github.com/NetEaseGame/aircv" target="_blank" rel="external"><code>aircv</code></a>。是真的强大！(以后要用图片查找，可以用这库<br>经测试，成功。但是。游戏窗口是可以调节的！没有办法根据不同大小的窗口来获取对应图片大小的坐标!!! pass</p>
+<h4 id="version-3"><a href="#version-3" class="headerlink" title="version.3"></a>version.3</h4><p>发现目前最大难题还是坐标的获取。思索良久，在感觉要以失败告终愧对寮友的时候，突然脑袋亮灯:<br>不管界面大小，按钮的坐标相对游戏的窗口来说，是按一定比例位置显示的。所以我们只要知道了游戏窗口的位置。所有按钮的位置都可以通过百分比算出来。<br>完美，这样就只需要在启动脚本的时候寻找窗口的位置就好了。而且可以随时中断重启脚本。<br>寻找游戏窗口的位置，这个比较容易，可以通过<code>win32gui</code>库里面的函数完成。核心代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> win32gui <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">listWindows</span><span class="params">()</span>:</span></div><div class="line">    dialogs = []</div><div class="line">    tmp = <span class="string">'\xd2\xf5\xd1\xf4\xca\xa6'</span>  <span class="comment">#阴阳师</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">callback</span><span class="params">(hwnd, mouse)</span>:</span></div><div class="line">        <span class="keyword">if</span> IsWindow(hwnd) <span class="keyword">and</span> IsWindowEnabled(hwnd) <span class="keyword">and</span> IsWindowVisible(hwnd):</div><div class="line">            title = GetWindowText(hwnd)</div><div class="line">            <span class="keyword">if</span> tmp <span class="keyword">in</span> title:</div><div class="line">                dialogs.append(GetWindowRect(hwnd))</div><div class="line">    EnumWindows(callback, <span class="number">0</span>)</div><div class="line">    <span class="keyword">return</span> dialogs</div></pre></td></tr></table></figure></p>
+<p>很简单的几行就解决了所有麻烦事。简单概括就是，遍历所有进程的窗口。找到标题含有阴阳师字段的窗口存下来(存的是左上和右下的坐标).然后在这范围内计算对应按钮的坐标，就odk了。</p>
+<hr>
+<h2 id="末"><a href="#末" class="headerlink" title="末"></a>末</h2><p>花了几天完美写了个脚本，发给群里被寮友们称为鸡哥脚步，甚是开心.<br>整个过程还是学到不少东西，比如更熟悉使用鼠标键盘库，学知道了网易的那个aircv开源库。<br>一开始遇到启动脚本点击事件无响应的问题，纠结了半天，最后解决方案是以管理员模式运行脚本.猜应该是阴阳师游戏的原因吧，比较特殊，其他软件没有此问题!<br>已经跑了多天，没有被封，我想网易检测外挂的方式应该就是连点器(点击时间间隔相同)和按钮精灵(点击坐标有序)吧</p>
+<p>(终)</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/06/29/go-input/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/05/03/py-win32com-dispatch/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2018/05/18/yys-script/" data-title="鸡哥脚步始末" data-url="http://tsfissure.com/2018/05/18/yys-script/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-05-18 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/py/">py<span>6</span></a></li> <li><a href="/tags/杂谈/">杂谈<span>5</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'tsfissure' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 tsfissure
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+   </html>
