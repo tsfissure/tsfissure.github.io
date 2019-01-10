@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>High-Concurrency | tsfissure</title>
+  <title>一次宕机的小讨论 | tsfissure</title>
   <meta name="author" content="tsfissure">
   
   <meta name="description" content="fissure">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="High-Concurrency"/>
+  <meta property="og:title" content="一次宕机的小讨论"/>
   <meta property="og:site_name" content="tsfissure"/>
 
   
@@ -90,7 +90,7 @@
 
 	
 		<div class="page-header page-header-inverse ">		
-			<h1 class="title title-inverse "> High-Concurrency</h1>
+			<h1 class="title title-inverse "> 一次宕机的小讨论</h1>
 		</div>		
 	
 
@@ -112,13 +112,19 @@
 
 	  <h3 id="一次宕机的小讨论"><a href="#一次宕机的小讨论" class="headerlink" title="一次宕机的小讨论"></a>一次宕机的小讨论</h3><p>记录一场因为线上并发量大导致的宕机事故讨论</p>
 <a id="more"></a>
+<hr>
 <h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>做了一个”消耗道具会获得相应积分,通过积分排名(所有服排名)领取排名奖励和达标奖励(达到多少积分可以获得相应奖励)”的活动。<br>玩家知道有这活动后，大批量玩家提前开始攒道具。<br>0点一到，活动开启，玩家狂点消耗,服务器，卒.</p>
+<hr>
 <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>需求：要实时更新排行榜(玩家点一下排行榜取到的是最新的数据)<br>服务器架构：有一个总排行服S1，所有逻辑服Sn启动都连到S1，某一个服有数据更新时，Sm发送新数据到S1，S1再广播给N个逻辑服同步新排名数据</p>
 <p>活动已经开了多期，但之前服务器比较少，还ok，这次有300来个服务器连着S1，每个玩家点一下，要向S1发1条消息，S1要向外面发300条消息，当玩家玩家集中点击的时候，S1向外发送消息阻塞，卒。</p>
+<hr>
 <h3 id="讨论方案一"><a href="#讨论方案一" class="headerlink" title="讨论方案一"></a>讨论方案一</h3><p>改需求，五分钟同步。策划不同意，GG。</p>
+<hr>
 <h3 id="讨论方案二"><a href="#讨论方案二" class="headerlink" title="讨论方案二"></a>讨论方案二</h3><p>多机处理，总排行服S1,加再S2,S3,S4…S10，来做为下一层的排行服，分别与数个逻辑服相连和S1相连。这样分流后，单服消息量减少(<del>其实并不能减少多少</del>)，阻塞会明显减少。</p>
 <p>成本高，GG。</p>
+<hr>
 <h3 id="讨论方案三"><a href="#讨论方案三" class="headerlink" title="讨论方案三"></a>讨论方案三</h3><p>一边退一步,综合考虑。<br>这也是最后线上方案优化方案。<br>架构不变，但不实时广播，延迟5秒(对玩家和策划来说都能接受的范围)，把这5秒内收到的更新消息，处理后再以单帧1000条消息上限发给逻辑服。可以说成是<strong>把5秒内的消息去重再分批发送出去</strong>。</p>
+<hr>
 <h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>使用方案三优化后，的确也稳定了下来，没有宕过，消息去重的小优化，作用挺明显。</p>
 	  
 	</div>
@@ -174,7 +180,7 @@
   <h2 class="title">留言</h2>
 
   
-  	 <div class="ds-thread" data-thread-key="2018/12/29/high-concurrency/" data-title="High-Concurrency" data-url="http://tsfissure.com/2018/12/29/high-concurrency/"></div>  
+  	 <div class="ds-thread" data-thread-key="2018/12/29/high-concurrency/" data-title="一次宕机的小讨论" data-url="http://tsfissure.com/2018/12/29/high-concurrency/"></div>  
   
 </section>
 
