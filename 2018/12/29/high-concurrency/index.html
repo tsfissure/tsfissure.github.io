@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Py_win32com_dispatch | tsfissure</title>
+  <title>High-Concurrency | tsfissure</title>
   <meta name="author" content="tsfissure">
   
   <meta name="description" content="fissure">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Py_win32com_dispatch"/>
+  <meta property="og:title" content="High-Concurrency"/>
   <meta property="og:site_name" content="tsfissure"/>
 
   
@@ -90,7 +90,7 @@
 
 	
 		<div class="page-header page-header-inverse ">		
-			<h1 class="title title-inverse "> Py_win32com_dispatch</h1>
+			<h1 class="title title-inverse "> High-Concurrency</h1>
 		</div>		
 	
 
@@ -110,16 +110,16 @@
 	<div class="mypage">		
 	  		
 
-	  <p>有个朋友叫帮忙写个脚本,把Excel A,B,C,D,E中的某个sheet，同步到F中。我觉得这很容易，便一口答应了。<br>但试了好几个库比如openpyxl, pandas,xlrd,xlwt啥的，都有两个共同问题</p>
-<ul>
-<li>不能把sheet复制到不同的Excel中</li>
-<li>复制单元格内容时，只能复制值，格式控制不完全,图表啥的，就GG了.</li>
-</ul>
-<p>最后发现 win32com.client.Dispatch，异常好用，记录一下。</p>
+	  <h3 id="一次宕机的小讨论"><a href="#一次宕机的小讨论" class="headerlink" title="一次宕机的小讨论"></a>一次宕机的小讨论</h3><p>记录一场因为线上并发量大导致的宕机事故讨论</p>
 <a id="more"></a>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>相比其他库，这里优势在于跨Excel的复制，其实其他库也提供了copy方法，但都有个判断，sheet的parent(也就是Excel)是不是同一个。如果不是，就raise error.</p>
-<h3 id="亮点方法"><a href="#亮点方法" class="headerlink" title="亮点方法"></a>亮点方法</h3><p>下面代码中的Copy方法就是本文的重点了.t1中的test_sheet复制到t2中去。而且位置是在第1个的前面。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> win32com.client <span class="keyword">import</span> Dispatch</div><div class="line"></div><div class="line">excel_dp = Dispatch(<span class="string">"Excel.Application"</span>)</div><div class="line">t1 = excel_dp.Workbooks.Open(Filename = <span class="string">"E:\\tstfxml\\ex1.xlsx"</span>) <span class="comment"># use absolute path</span></div><div class="line">t2 = excel_dp.Workbooks.Open(Filename = <span class="string">"E:\\tstfxml\\ex2.xlsx"</span>)</div><div class="line"></div><div class="line">test_sheet = t1.Worksheets(<span class="string">"test_sheet"</span>) <span class="comment"># get sheet "test_sheet"</span></div><div class="line">test_sheet.Copy(Before = t2.Worksheets(<span class="number">1</span>)) <span class="comment"># copy to ex2 before sheet_1</span></div><div class="line"></div><div class="line">t2.Close(SaveChanges = <span class="keyword">True</span>)</div><div class="line">t1.Close()</div><div class="line">excel_dp.Quit()</div></pre></td></tr></table></figure></p>
-<p>这里有点困扰的就是，我试过用After参数，但并不能达到满意的效果。不知道算bug还是开发者的设定。所以你想放到最后一个的话，你可能需要先添加一个临时sheet，复制过去，再删除.</p>
+<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>做了一个”消耗道具会获得相应积分,通过积分排名(所有服排名)领取排名奖励和达标奖励(达到多少积分可以获得相应奖励)”的活动。<br>玩家知道有这活动后，大批量玩家提前开始攒道具。<br>0点一到，活动开启，玩家狂点消耗,服务器，卒.</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>需求：要实时更新排行榜(玩家点一下排行榜取到的是最新的数据)<br>服务器架构：有一个总排行服S1，所有逻辑服Sn启动都连到S1，某一个服有数据更新时，Sm发送新数据到S1，S1再广播给N个逻辑服同步新排名数据</p>
+<p>活动已经开了多期，但之前服务器比较少，还ok，这次有300来个服务器连着S1，每个玩家点一下，要向S1发1条消息，S1要向外面发300条消息，当玩家玩家集中点击的时候，S1向外发送消息阻塞，卒。</p>
+<h3 id="讨论方案一"><a href="#讨论方案一" class="headerlink" title="讨论方案一"></a>讨论方案一</h3><p>改需求，五分钟同步。策划不同意，GG。</p>
+<h3 id="讨论方案二"><a href="#讨论方案二" class="headerlink" title="讨论方案二"></a>讨论方案二</h3><p>多机处理，总排行服S1,加再S2,S3,S4…S10，来做为下一层的排行服，分别与数个逻辑服相连和S1相连。这样分流后，单服消息量减少(<del>其实并不能减少多少</del>)，阻塞会明显减少。</p>
+<p>成本高，GG。</p>
+<h3 id="讨论方案三"><a href="#讨论方案三" class="headerlink" title="讨论方案三"></a>讨论方案三</h3><p>一边退一步,综合考虑。<br>这也是最后线上方案优化方案。<br>架构不变，但不实时广播，延迟5秒(对玩家和策划来说都能接受的范围)，把这5秒内收到的更新消息，处理后再以单帧1000条消息上限发给逻辑服。可以说成是<strong>把5秒内的消息去重再分批发送出去</strong>。</p>
+<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>使用方案三优化后，的确也稳定了下来，没有宕过，消息去重的小优化，作用挺明显。</p>
 	  
 	</div>
 
@@ -128,14 +128,14 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/2018/05/18/yys-script/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2017/07/28/terribleweeks/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2018/07/09/go-protobuf/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -174,7 +174,7 @@
   <h2 class="title">留言</h2>
 
   
-  	 <div class="ds-thread" data-thread-key="2018/05/03/py-win32com-dispatch/" data-title="Py_win32com_dispatch" data-url="http://tsfissure.com/2018/05/03/py-win32com-dispatch/"></div>  
+  	 <div class="ds-thread" data-thread-key="2018/12/29/high-concurrency/" data-title="High-Concurrency" data-url="http://tsfissure.com/2018/12/29/high-concurrency/"></div>  
   
 </section>
 
@@ -188,7 +188,7 @@
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2018-05-03 
+	2018-12-29 
 	</div>
 	
 
@@ -201,7 +201,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/py/">py<span>6</span></a></li> <li><a href="/tags/excel/">excel<span>1</span></a></li>
+  <li><a href="/tags/杂谈/">杂谈<span>6</span></a></li> <li><a href="/tags/技巧/">技巧<span>2</span></a></li>
     </ul>
 	</div>
 		
