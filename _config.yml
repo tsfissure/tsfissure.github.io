@@ -69,5 +69,5 @@ theme: freemind
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/tsfissure/tsfissure.github.io.git
+  repo: https://tsfissure@github.com/tsfissure/tsfissure.github.io.git
   branch: master
