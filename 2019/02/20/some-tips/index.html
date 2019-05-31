@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Py_win32com_dispatch | tsfissure</title>
+  <title>Some_tips | tsfissure</title>
   <meta name="author" content="tsfissure">
   
   <meta name="description" content="fissure">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Py_win32com_dispatch"/>
+  <meta property="og:title" content="Some_tips"/>
   <meta property="og:site_name" content="tsfissure"/>
 
   
@@ -90,7 +90,7 @@
 
 	
 		<div class="page-header page-header-inverse ">		
-			<h1 class="title title-inverse "> Py_win32com_dispatch</h1>
+			<h1 class="title title-inverse "> Some_tips</h1>
 		</div>		
 	
 
@@ -110,16 +110,18 @@
 	<div class="mypage">		
 	  		
 
-	  <p>有个朋友叫帮忙写个脚本,把Excel A,B,C,D,E中的某个sheet，同步到F中。我觉得这很容易，便一口答应了。<br>但试了好几个库比如openpyxl, pandas,xlrd,xlwt啥的，都有两个共同问题</p>
-<ul>
-<li>不能把sheet复制到不同的Excel中</li>
-<li>复制单元格内容时，只能复制值，格式控制不完全,图表啥的，就GG了.</li>
-</ul>
-<p>最后发现 win32com.client.Dispatch，异常好用，记录一下。</p>
+	  <p>有时候小问题，网上搜了多种解决方案行不通，最后才搜到一个可行方案。<br>怕忘了。记录一下。</p>
+<p>或者是一些有趣小知识，记录一下。</p>
 <a id="more"></a>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>相比其他库，这里优势在于跨Excel的复制，其实其他库也提供了copy方法，但都有个判断，sheet的parent(也就是Excel)是不是同一个。如果不是，就raise error.</p>
-<h3 id="亮点方法"><a href="#亮点方法" class="headerlink" title="亮点方法"></a>亮点方法</h3><p>下面代码中的Copy方法就是本文的重点了.t1中的test_sheet复制到t2中去。而且位置是在第1个的前面。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> win32com.client <span class="keyword">import</span> Dispatch</div><div class="line"></div><div class="line">excel_dp = Dispatch(<span class="string">"Excel.Application"</span>)</div><div class="line">t1 = excel_dp.Workbooks.Open(Filename = <span class="string">"E:\\tstfxml\\ex1.xlsx"</span>) <span class="comment"># use absolute path</span></div><div class="line">t2 = excel_dp.Workbooks.Open(Filename = <span class="string">"E:\\tstfxml\\ex2.xlsx"</span>)</div><div class="line"></div><div class="line">test_sheet = t1.Worksheets(<span class="string">"test_sheet"</span>) <span class="comment"># get sheet "test_sheet"</span></div><div class="line">test_sheet.Copy(Before = t2.Worksheets(<span class="number">1</span>)) <span class="comment"># copy to ex2 before sheet_1</span></div><div class="line"></div><div class="line">t2.Close(SaveChanges = <span class="keyword">True</span>)</div><div class="line">t1.Close()</div><div class="line">excel_dp.Quit()</div></pre></td></tr></table></figure></p>
-<p>这里有点困扰的就是，我试过用After参数，但并不能达到满意的效果。不知道算bug还是开发者的设定。所以你想放到最后一个的话，你可能需要先添加一个临时sheet，复制过去，再删除.</p>
+<h3 id="已取消网页导航"><a href="#已取消网页导航" class="headerlink" title="已取消网页导航"></a>已取消网页导航</h3><p>有好几次出现在uc上打开一个网址提示”已取消见面导航”。但是换chrome或者firefox都正常。<br>网上搜好些方案都是要么无效，要么很复杂(修改注册表，执行啥啥命令啥的)。<br>最后在一个<a href="https://blog.csdn.net/daman1985/article/details/51731155" target="_blank" rel="external">csdn</a>上找到了解决方案</p>
+<blockquote>
+<p>工具-&gt;代理设置-&gt;局域网设置: 自动配置时选择“自动检测设置”，去掉“使用自动配置脚本”选项</p>
+</blockquote>
+<h3 id="python-gbk"><a href="#python-gbk" class="headerlink" title="python gbk"></a>python gbk</h3><p>python读取中文文件时使用<code>gbk</code>或者<code>gb18030</code>,格式如<code>codecs.open(fn, encoding=&#39;gbk&#39;)</code>，不要用<code>gb2312</code><br>收集的字符<code>gb18030&gt;gbk&gt;gb2312</code>,比如涅槃的槃字。gb2312是读不出来的。<br>我不会说因为这个，给他们生成配置时出过问题。。。</p>
+<h3 id="python-shell启动-UAC"><a href="#python-shell启动-UAC" class="headerlink" title="python shell启动/UAC"></a>python shell启动/UAC</h3><p>利用python启动文件方式有很多，能够控制管理员确认的方式有如下两种：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">win32api.ShellExecute(<span class="keyword">None</span>, <span class="string">u'runas'</span>, sys.executable, __file__, <span class="keyword">None</span>, <span class="number">1</span>)</div><div class="line">ctypes.windll.shell32.ShellExecuteW(<span class="keyword">None</span>, <span class="string">u'runas'</span>, sys.executable, __file__, <span class="keyword">None</span>, <span class="number">1</span>)</div></pre></td></tr></table></figure></p>
+<p>但是谨记，如果路径包含非英文，只能用上面种方式。</p>
+<h3 id="python打开文件夹"><a href="#python打开文件夹" class="headerlink" title="python打开文件夹"></a>python打开文件夹</h3><p>试了两种：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">os.system(<span class="string">"explorer E:\xx\yy"</span>)</div><div class="line">os.startfile(<span class="string">"E:\xx\yy"</span>)</div></pre></td></tr></table></figure></p>
+<p>对于上面一种可以顺利执行但是只能是左\不能是右/。而且如果gui程序，还会弹一个命令行窗口，逼死强迫症。下面一种很完美…</p>
 	  
 	</div>
 
@@ -129,13 +131,13 @@
 <ul class="pagination">
 	 
 				
-    	<li class="prev"><a href="/2018/05/18/yys-script/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+    	<li class="prev"><a href="/2019/03/06/python-color/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
   		
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2017/07/28/terribleweeks/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2018/12/29/high-concurrency/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -174,7 +176,7 @@
   <h2 class="title">留言</h2>
 
   
-  	 <div class="ds-thread" data-thread-key="2018/05/03/py-win32com-dispatch/" data-title="Py_win32com_dispatch" data-url="http://tsfissure.com/2018/05/03/py-win32com-dispatch/"></div>  
+  	 <div class="ds-thread" data-thread-key="2019/02/20/some-tips/" data-title="Some_tips" data-url="http://tsfissure.com/2019/02/20/some-tips/"></div>  
   
 </section>
 
@@ -188,7 +190,7 @@
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2018-05-03 
+	2019-02-20 
 	</div>
 	
 
@@ -201,7 +203,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/py/">py<span>7</span></a></li> <li><a href="/tags/excel/">excel<span>1</span></a></li>
+  <li><a href="/tags/py/">py<span>7</span></a></li> <li><a href="/tags/技巧/">技巧<span>3</span></a></li>
     </ul>
 	</div>
 		
